@@ -2,6 +2,15 @@
     <string name="app_name">Calculadora</string>
 
     <string-array name="Monedas">
-
+        <item>Dolar(USA)</item>
+        <item>Dolar(Canada)</item>
+        <item>Colon(SV)</item>
+        <item>Yen(JP)</item>
+        <item>Euro(UE)</item>
+        <item>Quetzal(Guatemala)</item>
+        <item>Lempira(Honduras)</item>
+        <item>Sol(Peru)</item>
+        <item>Peso(MX)</item>
+        <item>Peso(Colombia)</item>
     </string-array>
 </resources>
