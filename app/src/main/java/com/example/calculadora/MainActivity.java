@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         tbhConversores.setup();
 
         tbhConversores.addTab(tbhConversores.newTabSpec("$↔€").setContent(R.id.tabMonedas));
+        tbhConversores.addTab(tbhConversores.newTabSpec("Tiempo").setContent(R.id.tabTiempo));
 
         btnCalcular = findViewById(R.id.btnCalcular);
         btnCalcular.setOnClickListener(new View.OnClickListener(){
@@ -47,7 +48,26 @@ public class MainActivity extends AppCompatActivity {
                     tempVal = findViewById(R.id.lblRespuesta);
                     tempVal.setText("" + MiConversor.Convertir(0, cboDe.getSelectedItemPosition(), cboA.getSelectedItemPosition(), Cantidad));
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Por facor ingrese solo valores validos " + e.getMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Por favor ingrese solo valores validos " + e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnCalcular = findViewById(R.id.btnCalcularTiempo);
+        btnCalcular.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View V){
+                try {
+                    tempVal = (TextView) findViewById(R.id.txtCantTiempo);
+                    double Cantidad =  Double.parseDouble(tempVal.getText().toString());
+
+                    cboDe = findViewById(R.id.cboDeTiempo);
+                    cboA = findViewById(R.id.cboATiempo);
+
+                    tempVal = findViewById(R.id.lblRespuestaTiempo);
+                    tempVal.setText("" + MiConversor.Convertir(1, cboDe.getSelectedItemPosition(), cboA.getSelectedItemPosition(), Cantidad));
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Por favor ingrese solo valores validos " + e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
             }
         });

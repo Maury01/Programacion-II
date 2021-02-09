@@ -128,10 +128,101 @@
                 </RelativeLayout>
 
                 <LinearLayout
-                    android:id="@+id/tab2"
+                    android:id="@+id/tabTiempo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/lblTiempo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="147dp"
+                        android:layout_marginBottom="614dp"
+                        android:text="Tiempo"
+                        android:textSize="30dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtCantTiempo"
+                        android:layout_width="116dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="41dp"
+                        android:layout_marginBottom="550dp"
+                        android:hint="Cantidad" />
+
+                    <TextView
+                        android:id="@+id/lblDeTiempo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="342dp"
+                        android:layout_marginBottom="554dp"
+                        android:text="De:"
+                        android:textSize="25dp" />
+
+                    <Spinner
+                        android:id="@+id/cboDeTiempo"
+                        android:layout_width="148dp"
+                        android:layout_height="41dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="178dp"
+                        android:layout_marginBottom="549dp"
+                        android:entries="@array/Tiempo" />
+
+                    <TextView
+                        android:id="@+id/lblATiempo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="350dp"
+                        android:layout_marginBottom="487dp"
+                        android:text="A:"
+                        android:textSize="25dp" />
+
+                    <Spinner
+                        android:id="@+id/cboATiempo"
+                        android:layout_width="148dp"
+                        android:layout_height="41dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="178dp"
+                        android:layout_marginBottom="486dp"
+                        android:entries="@array/Tiempo" />
+
+                    <TextView
+                        android:id="@+id/lblRespuestaTiempo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="41dp"
+                        android:layout_marginBottom="486dp"
+                        android:text="Respuesta"
+                        android:textSize="25dp" />
+
+                    <Button
+                        android:id="@+id/btnCalcularTiempo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="124dp"
+                        android:layout_marginBottom="384dp"
+                        android:text="Calcular"
+                        android:textSize="25dp" />
 
                 </LinearLayout>
 
