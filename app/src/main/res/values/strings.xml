@@ -13,4 +13,17 @@
         <item>Peso(MX)</item>
         <item>Peso(Colombia)</item>
     </string-array>
+
+    <string-array name="Tiempo">
+        <item>Microsegundos</item>
+        <item>Milisegundos</item>
+        <item>Segundos</item>
+        <item>Minutos</item>
+        <item>Horas</item>
+        <item>Dias</item>
+        <item>Meses</item>
+        <item>Años</item>
+        <item>Decadas</item>
+        <item>Siglos</item>
+    </string-array>
 </resources>
