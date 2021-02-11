@@ -2,6 +2,7 @@ package com.example.calculadora;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,16 +15,18 @@ import android.widget.Toast;
 
 import java.util.IllegalFormatCodePointException;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity
+{
     TabHost tbhConversores;
-    Button btnCalcular;
+    Button btnConvertir;
     TextView tempVal;
-    Spinner cboDe, cboA;
-    Conversores MiConversor = new Conversores();
+    Spinner spnOpcionDe, spnOpcionA;
+    Conversores miConversor = new Conversores();
     RelativeLayout contenidoView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -31,46 +34,51 @@ public class MainActivity extends AppCompatActivity {
         tbhConversores = findViewById(R.id.tbhConversores);
         tbhConversores.setup();
 
-        tbhConversores.addTab(tbhConversores.newTabSpec("$↔€").setContent(R.id.tabMonedas));
-        tbhConversores.addTab(tbhConversores.newTabSpec("Tiempo").setContent(R.id.tabTiempo));
+        tbhConversores.addTab(tbhConversores.newTabSpec("Divisas").setContent(R.id.tabDivisas).setIndicator("$↔€"));
+        tbhConversores.addTab(tbhConversores.newTabSpec("Tiempo").setContent(R.id.tabTiempo).setIndicator("H↔S"));
 
-        btnCalcular = findViewById(R.id.btnCalcular);
-        btnCalcular.setOnClickListener(new View.OnClickListener(){
+        btnConvertir = findViewById(R.id.btnCalcular);
+        btnConvertir.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View V){
+            public void onClick(View v) {
                 try {
-                    tempVal = (TextView) findViewById(R.id.txtCantidad);
-                    double Cantidad =  Double.parseDouble(tempVal.getText().toString());
+                    tempVal = (TextView) findViewById(R.id.txtcantidad);
+                    double cantidad = Double.parseDouble(tempVal.getText().toString());
 
-                    cboDe = findViewById(R.id.cboDe);
-                    cboA = findViewById(R.id.cboA);
-
+                    spnOpcionDe = findViewById(R.id.cboDe);
+                    spnOpcionA = findViewById(R.id.cboA);
                     tempVal = findViewById(R.id.lblRespuesta);
-                    tempVal.setText("" + MiConversor.Convertir(0, cboDe.getSelectedItemPosition(), cboA.getSelectedItemPosition(), Cantidad));
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Por favor ingrese solo valores validos " + e.getMessage(),Toast.LENGTH_SHORT).show();
+                    tempVal.setText("Respuesta: " + miConversor.Convertir(0, spnOpcionDe.getSelectedItemPosition(), spnOpcionA.getSelectedItemPosition(), cantidad));
+                }catch (Exception e){
+                    tempVal = findViewById(R.id.lblRespuesta);
+                    tempVal.setText("Por favor ingrese los valores correspondiente");
+                    Toast.makeText(getApplicationContext(), "Por ingrese los valores correspondiente "+ e.getMessage(),Toast.LENGTH_SHORT).show();
+						/*Snackbar snackbar = Snackbar.make(contenidoView, "Por favor ingrese los valores correspondiente", Snackbar.LENGTH_LONG);
+						 snackbar.show();*/
                 }
             }
         });
-
-        btnCalcular = findViewById(R.id.btnCalcularTiempo);
-        btnCalcular.setOnClickListener(new View.OnClickListener(){
+        btnConvertir = findViewById(R.id.btnCalcularTiempo);
+        btnConvertir.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View V){
+            public void onClick(View v) {
                 try {
-                    tempVal = (TextView) findViewById(R.id.txtCantTiempo);
-                    double Cantidad =  Double.parseDouble(tempVal.getText().toString());
+                    tempVal = findViewById(R.id.txtCantidadL);
+                    double cantidad = Double.parseDouble(tempVal.getText().toString());
 
-                    cboDe = findViewById(R.id.cboDeTiempo);
-                    cboA = findViewById(R.id.cboATiempo);
+                    spnOpcionDe = findViewById(R.id.cboDeL);
+                    spnOpcionA = findViewById(R.id.cboAL);
+                    tempVal = findViewById(R.id.lblRespuestaL);
 
-                    tempVal = findViewById(R.id.lblRespuestaTiempo);
-                    tempVal.setText("" + MiConversor.Convertir(1, cboDe.getSelectedItemPosition(), cboA.getSelectedItemPosition(), Cantidad));
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Por favor ingrese solo valores validos " + e.getMessage(),Toast.LENGTH_SHORT).show();
+                    tempVal.setText("Respuesta: " + miConversor.Convertir(1, spnOpcionDe.getSelectedItemPosition(), spnOpcionA.getSelectedItemPosition(), cantidad));
+                }catch (Exception e){
+                    tempVal = findViewById(R.id.lblRespuestaL);
+                    tempVal.setText("Por favor ingrese los valores correspondiente");
+                    Toast.makeText(getApplicationContext(), "Por ingrese los valores correspondiente "+ e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
     }
 
 }

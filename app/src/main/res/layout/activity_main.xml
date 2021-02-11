@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/contenidoView"
-    tools:context=".MainActivity">
+    android:id="@+id/contenidoView">
 
     <TabHost
         android:id="@+id/tbhConversores"
@@ -28,217 +25,142 @@
                 android:layout_height="match_parent">
 
                 <RelativeLayout
-                    android:id="@+id/tabMonedas"
+                    android:id="@+id/tabTiempo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/lblMonedas"
+                        android:id="@+id/lblDeL"
+                        android:text="DE:"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="147dp"
-                        android:layout_marginBottom="614dp"
-                        android:text="Monedas"
-                        android:textSize="30dp" />
-
-                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_height="wrap_content"/>
+                    <Spinner
+                        android:id="@+id/cboDeL"
+                        android:entries="@array/Tiempo"
+                        android:layout_marginLeft="40dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"/>
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:id="@+id/lblAL"
+                        android:text="A:"
+                        android:layout_below="@id/lblDeL"
+                        android:layout_marginTop="40dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <Spinner
+                        android:id="@+id/cboAL"
+                        android:layout_below="@id/cboDeL"
+                        android:layout_marginTop="40dp"
+                        android:entries="@array/Tiempo"
+                        android:layout_marginLeft="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <EditText
+                        android:id="@+id/txtCantidadL"
+                        android:layout_below="@id/lblAL"
+                        android:layout_marginTop="40dp"
+                        android:hint="Cantidad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/lblRespuestaL"
+                        android:layout_below="@id/txtCantidadL"
+                        android:text="Respuesta: ?"
+                        android:layout_marginTop="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <Button
+                        android:id="@+id/btnCalcularTiempo"
+                        android:layout_below="@id/lblRespuestaL"
+                        android:layout_marginTop="40dp"
+                        android:text="Convertir"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtCantidad"
-                        android:layout_width="116dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="41dp"
-                        android:layout_marginBottom="550dp"
-                        android:hint="Cantidad" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tabDivisas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/lblDe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="342dp"
-                        android:layout_marginBottom="554dp"
-                        android:text="De:"
-                        android:textSize="25dp" />
+                        android:text="DE: " />
 
                     <Spinner
                         android:id="@+id/cboDe"
-                        android:layout_width="148dp"
-                        android:layout_height="41dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="178dp"
-                        android:layout_marginBottom="549dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
                         android:entries="@array/Monedas" />
 
                     <TextView
                         android:id="@+id/lblA"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="350dp"
-                        android:layout_marginBottom="487dp"
-                        android:text="A:"
-                        android:textSize="25dp" />
+                        android:layout_below="@id/cboDe"
+                        android:layout_marginTop="20dp"
+                        android:text="A: " />
 
                     <Spinner
                         android:id="@+id/cboA"
-                        android:layout_width="148dp"
-                        android:layout_height="41dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="178dp"
-                        android:layout_marginBottom="486dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/cboDe"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="20dp"
                         android:entries="@array/Monedas" />
 
-                    <TextView
-                        android:id="@+id/lblRespuesta"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="41dp"
-                        android:layout_marginBottom="486dp"
-                        android:text="Respuesta"
-                        android:textSize="25dp" />
-
-                    <Button
-                        android:id="@+id/btnCalcular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="124dp"
-                        android:layout_marginBottom="384dp"
-                        android:text="Calcular"
-                        android:textSize="25dp" />
-
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:id="@+id/tabTiempo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/lblTiempo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="147dp"
-                        android:layout_marginBottom="614dp"
-                        android:text="Tiempo"
-                        android:textSize="30dp" />
-
-                    <com.google.android.material.textfield.TextInputLayout
+                    <EditText
+                        android:id="@+id/txtcantidad"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtCantTiempo"
-                        android:layout_width="116dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="41dp"
-                        android:layout_marginBottom="550dp"
+                        android:layout_below="@id/cboA"
+                        android:layout_marginTop="20dp"
                         android:hint="Cantidad" />
 
                     <TextView
-                        android:id="@+id/lblDeTiempo"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/lblRespuesta"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="342dp"
-                        android:layout_marginBottom="554dp"
-                        android:text="De:"
-                        android:textSize="25dp" />
-
-                    <Spinner
-                        android:id="@+id/cboDeTiempo"
-                        android:layout_width="148dp"
-                        android:layout_height="41dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="178dp"
-                        android:layout_marginBottom="549dp"
-                        android:entries="@array/Tiempo" />
-
-                    <TextView
-                        android:id="@+id/lblATiempo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="350dp"
-                        android:layout_marginBottom="487dp"
-                        android:text="A:"
-                        android:textSize="25dp" />
-
-                    <Spinner
-                        android:id="@+id/cboATiempo"
-                        android:layout_width="148dp"
-                        android:layout_height="41dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="178dp"
-                        android:layout_marginBottom="486dp"
-                        android:entries="@array/Tiempo" />
-
-                    <TextView
-                        android:id="@+id/lblRespuestaTiempo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="41dp"
-                        android:layout_marginBottom="486dp"
-                        android:text="Respuesta"
-                        android:textSize="25dp" />
+                        android:layout_below="@id/txtcantidad"
+                        android:layout_marginTop="20dp"
+                        android:text="Respuesta: ?" />
 
                     <Button
-                        android:id="@+id/btnCalcularTiempo"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/btnCalcular"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="124dp"
-                        android:layout_marginBottom="384dp"
-                        android:text="Calcular"
-                        android:textSize="25dp" />
+                        android:layout_below="@id/lblRespuesta"
+                        android:layout_marginTop="20dp"
+                        android:text="Calcular" />
+                </RelativeLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/tab3"
+                <RelativeLayout
+                    android:id="@+id/tabMasa"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                </LinearLayout>
-            </FrameLayout>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/tabAlmacenamiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-            <TabWidget
-                android:id="@android:id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                </RelativeLayout>
+
+            </FrameLayout>
         </LinearLayout>
     </TabHost>
+
 </RelativeLayout>
