@@ -48,7 +48,8 @@ public class MainActivity extends Activity
                     spnOpcionDe = findViewById(R.id.cboDe);
                     spnOpcionA = findViewById(R.id.cboA);
                     tempVal = findViewById(R.id.lblRespuesta);
-                    tempVal.setText("Respuesta: " + miConversor.Convertir(0, spnOpcionDe.getSelectedItemPosition(), spnOpcionA.getSelectedItemPosition(), cantidad));
+                    tempVal.setText("Respuesta: " + miConversor.Convertir(0, spnOpcionDe.getSelectedItemPosition(),
+                            spnOpcionA.getSelectedItemPosition(), cantidad));
                 }catch (Exception e){
                     tempVal = findViewById(R.id.lblRespuesta);
                     tempVal.setText("Por favor ingrese los valores correspondiente");
@@ -87,9 +88,11 @@ class Conversores {
     double [][] conversiones = {
             {1.0, 1.27, 8.75, 105.12, 0.83, 7.77, 24.30, 3.64, 20.10, 3571.0}, //Monedas
             {1.0, 0.001, 0.000001, 0.000000016666667, 0.000000000277778, 0.000000000011574, 0.000000000001653, 0.00000000000038052, 0.000000000000032, 0.000000000000003171, 3.171e-16},//Tiempo
-            {1.0}
+            {1.0},
+            {}
     };
     public double Convertir(int opcion, int de, int a, double cantidad){
-        return conversiones[opcion][a] / conversiones[opcion][de] * cantidad;
+
+        return Math.round((conversiones[opcion][a] / conversiones[opcion][de] * cantidad));
     }
 }
