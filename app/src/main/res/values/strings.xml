@@ -21,6 +21,7 @@
         <item>Minutos</item>
         <item>Horas</item>
         <item>Dias</item>
+        <item>Semanas</item>
         <item>Meses</item>
         <item>Años</item>
         <item>Decadas</item>
@@ -68,3 +69,4 @@
     <string-array name="Area">
         <item></item>
     </string-array>
+</resources>
