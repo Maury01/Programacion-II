@@ -21,10 +21,50 @@
         <item>Minutos</item>
         <item>Horas</item>
         <item>Dias</item>
-        <item>Semanas</item>
         <item>Meses</item>
         <item>Años</item>
         <item>Decadas</item>
         <item>Siglos</item>
     </string-array>
-</resources>
+
+    <string-array name="Almacenamiento">
+        <item>Byte</item>
+        <item>Kilobyte</item>
+        <item>Megabyte</item>
+        <item>Gigabyte</item>
+        <item>Terabyte</item>
+        <item>Petabyte</item>
+        <item>Exabyte</item>
+        <item>zettabyte</item>
+        <item>Yottabyte</item>
+        <item>Yobibyte</item>
+    </string-array>
+
+    <string-array name="Longitud">
+        <item>Milímetro</item>
+        <item>Centímetro</item>
+        <item>Decimetro</item>
+        <item>Metro</item>
+        <item>Kilómetro</item>
+        <item>Hectometro</item>
+        <item>Pulgada</item>
+        <item>Pie</item>
+        <item>Yarda</item>
+        <item>Milla</item>
+    </string-array>
+
+    <string-array name="Masa">
+        <item></item>
+    </string-array>
+
+    <string-array name="Temperatura">
+        <item></item>
+    </string-array>
+    
+    <string-array name="Volumen">
+        <item></item>
+    </string-array>
+
+    <string-array name="Area">
+        <item></item>
+    </string-array>
