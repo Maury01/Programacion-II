@@ -13,7 +13,6 @@
     <item>Peso(MX)</item>
     <item>Peso(Colombia)</item>
 </string-array>
-
     -<string-array name="Tiempo">
     <item>Microsegundos</item>
     <item>Milisegundos</item>
@@ -53,14 +52,24 @@
     <item>Milla</item>
 </string-array>
 
+    <string-array name="Masa">
+        <item>Miligramo</item>
+        <item>Centigramo</item>
+        <item>Decigramo</item>
+        <item>Gramo</item>
+        <item>Decagramo</item>
+        <item>Hectogramo</item>
+        <item>Kilogramo</item>
+        <item>Onza</item>
+        <item>Libra</item>
+        <item>Toneladas Metricas</item>
+    </string-array>
 
-    -<string-array name="Masa">
-
-</string-array>
-
-    -<string-array name="Temperatura">
-    <item/>
-</string-array>
+    <string-array name="Temperatura">
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+        <item>Kelvin</item>
+    </string-array>
 
     -<string-array name="Volumen">
     <item>Mililitros</item>
