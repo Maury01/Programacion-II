@@ -1,19 +1,16 @@
 
 package com.example.calculadora;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.IllegalFormatCodePointException;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     TabHost tbhConversores;
@@ -119,8 +116,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        btnCalcular = findViewById(R.id.btnCalcularMasa); //boton calcularMasa
+      
+          btnCalcular = findViewById(R.id.btnCalcularMasa); //boton calcularMasa
         btnCalcular.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
@@ -139,6 +136,21 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+      
+        btnCalcular = findViewById(R.id.btnCalcularArea); //boton calcularArea
+        btnCalcular.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    tempVal = (TextView) findViewById(R.id.txtCantidadArea);
+                    double cantidad = Double.parseDouble(tempVal.getText().toString());
+
+                    cboDe = findViewById(R.id.cboDeArea);
+                    cboA = findViewById(R.id.cboAArea);
+                    tempVal = findViewById(R.id.lblRespuestaL);
+                    double roundOff = Math.round((MiConversor.Convertir(5 cboDe.getSelectedItemPosition(), cboA.getSelectedItemPosition(), cantidad))*10000.0) / 10000.0;
+                    tempVal.setText("Respuesta: " + roundOff);
+                }catch (Exception e){
+                    tempVal = findViewById(R.id.lblRespuestaL);
 
         btnCalcular = findViewById(R.id.btnCalcularTemperatura); //boton calcularTemperatura
         btnCalcular.setOnClickListener(new View.OnClickListener() {
@@ -195,13 +207,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-
 class Conversores {
     double [][] conversiones = {
             {1.0, 1.27, 8.75, 105.12, 0.83, 7.77, 24.30, 3.64, 20.10, 3571.0}, //Monedas
             {1.0, 0.001, 0.000001, 0.000000016666667, 0.000000000277778, 0.000000000011574, 0.000000000001653, 0.00000000000038052, 0.000000000000032, 0.000000000000003171, 3.171e-16},//Tiempo
             {1.0, 0.000977, 0.000000953, 0.000000000931, 0.000000000000909, 0.000000000000000888, 0.000000000000000000867, 0.000000000000000000000847, 0.000000000000000000000001, 0.000000000000000000000000827},//Almacenamiento
-            {1.0, 0.1,0.01, 0.001, 0.000001,0.00001, 0.039370, 0.0032808, 0.00109, 0.000000621371}, //Longitud
+            {1.0, 0.1,0.01, 0.001, 0.000001,0.00001, 0.039370, 0.0032808, 0.00109, 0.000000621371} //Longitud
             {1,0.1,0.01,0.001,0.0001,0.00001,0.000001,0.000035274,2.2046e-6,0.000000001},//Masa
             {1,33.8,273.15}//Temperatura
     };
