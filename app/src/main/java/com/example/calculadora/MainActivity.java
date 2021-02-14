@@ -3,6 +3,7 @@ package com.example.calculadora;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         tbhConversores.addTab(tbhConversores.newTabSpec("Area").setContent(R.id.tabArea).setIndicator("Area"));
 
 
-        btnCalcular = findViewById(R.id.btnCalcular);
+        btnCalcular = findViewById(R.id.btnCalcular); //boton calcularMonedas
         btnCalcular.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View V){
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnCalcular = findViewById(R.id.btnCalcularTiempo);
+        btnCalcular = findViewById(R.id.btnCalcularTiempo); //boton calcularTiempo
         btnCalcular.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View V){
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnCalcular = findViewById(R.id.btnCalcularAlmacenamineto);
+        btnCalcular = findViewById(R.id.btnCalcularAlmacenamineto); //boton calcularAlmacenamiento
         btnCalcular.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnCalcular = findViewById(R.id.btnCalcularMasa); //boton calcularMasa
         btnCalcular.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             public void onClick(View v) {
                 try {
                     tempVal = (TextView) findViewById(R.id.txtCantidadMasa);
@@ -192,6 +194,46 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnCalcular = findViewById(R.id.btnCalcularVolumen); //boton calcularVolumen
+        btnCalcular.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    tempVal = (TextView) findViewById(R.id.txtCantidadVolumen);
+                    double cantidad = Double.parseDouble(tempVal.getText().toString());
+
+                    cboDe = findViewById(R.id.cboDeVolumen);
+                    cboA = findViewById(R.id.cboAVolumen);
+                    tempVal = findViewById(R.id.lblRespuestaVolumen);
+                    double roundOff = Math.round((MiConversor.Convertir(5, cboDe.getSelectedItemPosition(), cboA.getSelectedItemPosition(), cantidad))*10000.0) / 10000.0;
+                    tempVal.setText("Respuesta: " + roundOff);
+                }catch (Exception e){
+                    tempVal = findViewById(R.id.lblRespuestaVolumen);
+                    tempVal.setText("Por favor ingrese los valores correspondiente");
+                    Toast.makeText(getApplicationContext(), "Por ingrese los valores correspondiente "+ e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnCalcular = findViewById(R.id.btnCalcularArea); //boton calcularArea
+        btnCalcular.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    tempVal = (TextView) findViewById(R.id.txtCantidadArea);
+                    double cantidad = Double.parseDouble(tempVal.getText().toString());
+
+                    cboDe = findViewById(R.id.cboDeArea);
+                    cboA = findViewById(R.id.cboAArea);
+                    tempVal = findViewById(R.id.lblRespuestaArea);
+                    double roundOff = Math.round((MiConversor.Convertir(6, cboDe.getSelectedItemPosition(), cboA.getSelectedItemPosition(), cantidad))*10000.0) / 10000.0;
+                    tempVal.setText("Respuesta: " + roundOff);
+                }catch (Exception e){
+                    tempVal = findViewById(R.id.lblRespuestaArea);
+                    tempVal.setText("Por favor ingrese los valores correspondiente");
+                    Toast.makeText(getApplicationContext(), "Por ingrese los valores correspondiente "+ e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 }
@@ -203,7 +245,8 @@ class Conversores {
             {1.0, 0.000977, 0.000000953, 0.000000000931, 0.000000000000909, 0.000000000000000888, 0.000000000000000000867, 0.000000000000000000000847, 0.000000000000000000000001, 0.000000000000000000000000827},//Almacenamiento
             {1.0, 0.1,0.01, 0.001, 0.000001,0.00001, 0.039370, 0.0032808, 0.00109, 0.000000621371}, //Longitud
             {1,0.1,0.01,0.001,0.0001,0.00001,0.000001,0.000035274,2.2046e-6,0.000000001},//Masa
-            {1,33.8,273.15}//Temperatura
+            {1, 1, 0.000001, 0.001, 0.202884, 0.067628, 0.033814, 0.00416667, 0.000264172},//Volumen
+            {1, 0.01, 0.000001, 0.0000000001,  0.000000000001, 0.00155, 0.0000107639, 0.00000119599, 0.000000000247105, 0.000000000000386}//Area
     };
     public double Convertir(int opcion, int de, int a, double cantidad){
         return Math.round((conversiones[opcion][a] / conversiones[opcion][de] * cantidad));

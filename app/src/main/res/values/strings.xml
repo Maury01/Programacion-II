@@ -72,12 +72,30 @@
         <item>Fahrenheit</item>
         <item>Kelvin</item>
     </string-array>
-    
+
     <string-array name="Volumen">
-        <item></item>
+        <item>Mililitros</item>
+        <item>Centimetros Cubicos</item>
+        <item>Metros Cubicos</item>
+        <item>Litros</item>
+        <item>Cucharaditas</item>
+        <item>Cucharadas</item>
+        <item>Onzas</item>
+        <item>Tazas</item>
+        <item>Galones</item>
+        <item>Pie Cubico</item>
     </string-array>
 
     <string-array name="Area">
-        <item></item>
-    </string-array>
+        <item>Milímetros Cuadrado</item>
+        <item>Centimetros Cuadrados</item>
+        <item>Metros Cuadrados</item>
+        <item>Hectareas</item>
+        <item>Kilometros Cuadrado</item>
+        <item>Pulgadas Cuadradas</item>
+        <item>Pies Cuadrados</item>
+        <item>Yardas Cuadradas</item>
+        <item>Acres</item>
+    <item>MillasCuadradas</item>
+</string-array>
 </resources>
