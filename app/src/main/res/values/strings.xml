@@ -55,11 +55,22 @@
     </string-array>
 
     <string-array name="Masa">
-        <item></item>
+        <item>Miligramo</item>
+        <item>Centigramo</item>
+        <item>Decigramo</item>
+        <item>Gramo</item>
+        <item>Decagramo</item>
+        <item>Hectogramo</item>
+        <item>Kilogramo</item>
+        <item>Onza</item>
+        <item>Libra</item>
+        <item>Toneladas Metricas</item>
     </string-array>
 
     <string-array name="Temperatura">
-        <item></item>
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+        <item>Kelvin</item>
     </string-array>
     
     <string-array name="Volumen">

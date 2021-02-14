@@ -298,6 +298,7 @@
                     <Spinner
                         android:id="@+id/cboDeMasa"
                         android:layout_marginLeft="40dp"
+                        android:entries="@array/Masa"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
 
