@@ -19,8 +19,8 @@ import java.util.IllegalFormatCodePointException;
 
 public class MainActivity extends AppCompatActivity {
     TabHost tbhPestanas;
-    EditText txtCant;
-    TextView lblResultado;
+	RelativeLayout Contenido;
+    TextView Temp;
     Button btnCalculo;
 
     @Override
@@ -28,24 +28,42 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tbhPestanas = findViewById(R.id.tbhParcial);
+        Contenido = findViewById(R.id.contenidoView);
+		tbhPestanas = findViewById(R.id.tbhParcial);
         tbhPestanas.setup();
-        txtCant.findViewById(R.id.txtCantidad);
-        lblResultado.findViewById(R.id.lblPago);
 
-        tbhPestanas.addTab(tbhPestanas.newTabSpec("Agua").setContent(R.id.tabMetrosAgua).setIndicator("Agua"));
+		tbhPestanas.addTab(tbhPestanas.newTabSpec("Agua").setContent(R.id.tabMetrosAgua).setIndicator("Agua"));
         tbhPestanas.addTab(tbhPestanas.newTabSpec("Area").setContent(R.id.tabArea).setIndicator("Area"));
 
-        btnCalculo.findViewById(R.id.btnCalcular);
+		btnCalculo = (Button) findViewById(R.id.btnCalcular);
         btnCalculo.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View V){
-                int PrecioBase = 6;
-                double Cantidad = Double.parseDouble(txtCant.getText().toString());
+				@Override
+				public void onClick(View V){
+					CalcularAgua();
+				}
 
-                if (Cantidad > 0 && Cantidad <= 18){
-                    lblResultado.setText("Monto a pagar: $" + PrecioBase);
-                }
-            }
+				private void CalcularAgua() {
+					try {
+						double Procedimiento;
+						Temp = (TextView) findViewById(R.id.txtCantidad);
+						double Cantidad = Double.parseDouble(Temp.getText().toString());
+						Temp = (TextView) findViewById((R.id.lblPago));
+
+						if (Cantidad > 0 && Cantidad < 19){
+							Temp.setText("Monto a pagar: $6.00");
+						} else if (Cantidad > 18 && Cantidad <29) {
+							Procedimiento = ((Cantidad - 18) * 0.45) + 6;
+							Temp.setText("Monto a pagar: $" + Procedimiento);
+						} else {
+							Procedimiento = (((Cantidad - 28)*0.65)+(10*0.45))+6;
+							Temp.setText("Monto a pagar: $" + Procedimiento);
+						}
+
+					} catch (Exception e) {
+						Temp = findViewById(R.id.lblPago);
+						Temp.setText("Por favor rellene el campo correctamente");
+					}
+				}
         });
     }
 }
