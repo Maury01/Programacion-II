@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
 	RelativeLayout Contenido;
     TextView Temp;
     Button btnCalculo;
+    Spinner cboDe, cboA;
+	ConversoresArea MiConversor = new ConversoresArea();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,5 +67,32 @@ public class MainActivity extends AppCompatActivity {
 					}
 				}
         });
+
+        btnCalculo = (Button) findViewById(R.id.btnCalcularArea);
+		btnCalculo.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				try {
+					Temp = (TextView) findViewById(R.id.txtCantidadArea);
+					double cantidad = Double.parseDouble(Temp.getText().toString());
+
+					cboDe = findViewById(R.id.cboDeArea);
+					cboA = findViewById(R.id.cboAArea);
+					Temp = findViewById(R.id.lblRespuestaArea);
+					double roundOff = Math.round((MiConversor.Convertir(cboDe.getSelectedItemPosition(), cboA.getSelectedItemPosition(), cantidad))*10000.0) / 10000.0;
+					Temp.setText("Respuesta: " + roundOff);
+				}catch (Exception e){
+					Temp = findViewById(R.id.lblRespuestaArea);
+					Temp.setText("Por favor ingrese los valores correspondiente");
+					Toast.makeText(getApplicationContext(), "Por ingrese los valores correspondiente "+ e.getMessage(),Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
     }
+}
+
+class ConversoresArea {
+	double [] conversiones = {1, 0.1111, 0.111111,0.092903,  0.00014774656489, 0.000013188960818, 0.0000092903};//Area;
+	public double Convertir(int de, int a, double cantidad){
+		return(conversiones[a] / conversiones[de] * cantidad);
+	}
 }
