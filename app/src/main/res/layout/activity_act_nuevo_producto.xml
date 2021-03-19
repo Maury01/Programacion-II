@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".actNuevoProducto">
+
+
+    <Button
+        android:id="@+id/btnRegresar"
+        android:layout_width="62dp"
+        android:layout_height="42dp"
+        android:background="@color/teal_200"
+        android:onClick="Atras"
+        app:backgroundTint="@color/teal_200"
+        app:icon="@drawable/abc_vector_test"
+        app:iconTint="#020202" />
+
+    <TextView
+        android:id="@+id/txtNuevoProducto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/TituloRegProdct"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        app:layout_constraintStart_toEndOf="@+id/btnRegresar"
+        tools:layout_editor_absoluteY="6dp" />
+
+    <ImageButton
+        android:id="@+id/imgbFoto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="156dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNuevoProducto" />
+
+    <EditText
+        android:id="@+id/txtCodigo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/CodProducto"
+        app:layout_constraintTop_toBottomOf="@+id/imgbFoto"
+        tools:layout_editor_absoluteX="0dp" />
+    <EditText
+        android:id="@+id/txtDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/DescripProducto"
+        app:layout_constraintTop_toBottomOf="@+id/txtCodigo"
+        tools:layout_editor_absoluteX="0dp" />
+    <EditText
+        android:id="@+id/txtPresentacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/PresentacionProducto"
+        app:layout_constraintTop_toBottomOf="@+id/txtMarca"
+        tools:layout_editor_absoluteX="0dp" />
+    <EditText
+        android:id="@+id/txtMarca"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/MarcaProducto"
+        app:layout_constraintTop_toBottomOf="@+id/txtDescripcion"
+        tools:layout_editor_absoluteX="0dp" />
+    <EditText
+        android:id="@+id/txtPrecio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/PrecioProducto"
+        app:layout_constraintTop_toBottomOf="@+id/txtPresentacion"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/btnRegistrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="136dp"
+        android:text="@string/BotonGuardar"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPrecio" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

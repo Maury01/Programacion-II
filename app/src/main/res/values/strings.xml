@@ -1,3 +1,14 @@
 <resources>
+    <string name="app_name">Calculadora</string>
+    <string name="Titulo">Productos</string>
+    <string name="TituloRegProdct">Registrar Nuevo Producto</string>
+    <string name="BarraBusqueda">Buscar</string>
+    <string name="BotonGuardar">Registrar</string>
+
+    <string name="CodProducto">Codigo</string>
+    <string name="MarcaProducto">Marca</string>
+    <string name="PresentacionProducto">Presentacion</string>
+    <string name="DescripProducto">Descripcion</string>
+    <string name="PrecioProducto">Precio</string>
 
 </resources>

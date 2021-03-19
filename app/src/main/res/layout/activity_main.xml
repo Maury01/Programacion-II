@@ -1,7 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/contenidoView"
-    android:padding="5dp"/>
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/lblTitulo"
+        android:layout_width="406dp"
+        android:layout_height="37dp"
+        android:text="@string/Titulo"
+        android:textSize="20dp"
+        android:textAlignment="center"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtBuscar"
+        android:layout_marginTop="3dp" >
+
+
+    </ListView>
+
+    <EditText
+        android:id="@+id/txtBuscar"
+        android:layout_width="352dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/BarraBusqueda"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="53dp"
+        android:layout_marginEnd="55dp"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/btnBuscar"
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="5dp"
+        app:backgroundTint="@color/teal_200"
+        app:icon="@android:drawable/ic_menu_search"
+        app:iconTint="#FFFFFF" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnRegistProducto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:onClick="RegistrarProduc"
+        android:rotation="180"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/stat_notify_more" />
+
+</RelativeLayout>
