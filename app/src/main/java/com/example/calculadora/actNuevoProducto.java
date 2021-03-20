@@ -8,6 +8,8 @@ import android.view.View;
 
 public class actNuevoProducto extends AppCompatActivity {
 
+    BD miBD;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
