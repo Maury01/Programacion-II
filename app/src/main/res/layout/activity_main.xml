@@ -26,26 +26,12 @@
 
     <EditText
         android:id="@+id/txtBuscar"
-        android:layout_width="352dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/BarraBusqueda"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_marginTop="53dp"
-        android:layout_marginEnd="55dp"
+        android:hint="@string/BarraBusqueda"
         android:textSize="20dp" />
-
-    <Button
-        android:id="@+id/btnBuscar"
-        android:layout_width="52dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="49dp"
-        android:layout_marginEnd="5dp"
-        app:backgroundTint="@color/teal_200"
-        app:icon="@android:drawable/ic_menu_search"
-        app:iconTint="#FFFFFF" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnRegistProducto"
