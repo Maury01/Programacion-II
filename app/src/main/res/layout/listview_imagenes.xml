@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
             android:layout_width="60dp"
@@ -27,29 +27,37 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="10dp"
-            android:text="Juan Perez"
+            android:text="Soda  "
             android:textColor="@color/white"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/lblTelefono"
+            android:id="@+id/lblMarca"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/lblemail"
+            android:layout_below="@id/lblPresentacion"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="5dp"
-            android:text="2626-2222"
+            android:text="Pepsi"
             android:textColor="@color/white"
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/lblemail"
+            android:id="@+id/lblPresentacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/lblTitulo"
             android:layout_marginLeft="80dp"
             android:textColor="@color/white"
             android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/lblPrecio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="79dp" />
     </RelativeLayout>f
 
 </RelativeLayout>

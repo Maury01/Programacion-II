@@ -16,6 +16,7 @@
         android:textAlignment="center"/>
 
     <ListView
+        android:id="@+id/ltsBuscar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtBuscar"
