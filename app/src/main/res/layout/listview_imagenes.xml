@@ -5,9 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
             android:layout_width="60dp"
@@ -58,6 +55,4 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="25dp"
             android:layout_marginEnd="79dp" />
-    </RelativeLayout>f
-
 </RelativeLayout>

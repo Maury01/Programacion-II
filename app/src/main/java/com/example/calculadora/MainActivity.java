@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.AbstractCursor;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.database.Cursor;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 
@@ -38,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
 		btnRegistrar.setOnClickListener(v -> {
 			RegistrarProduct("nuevo", new String[]{});
 		});
+
+		try {
+			obteberDatosProductos();
+			buscarProducto();
+		} catch (Exception e){mostrarMsgToask(e.getMessage());}
+
 	}
 
 	@Override //Se contruyé el menú.
@@ -121,8 +130,8 @@ public class MainActivity extends AppCompatActivity {
 	//Obtener los datos de la BD, más no mostrarlos.
 	private void obteberDatosProductos() {
 		miBD = new BD(getApplicationContext(), "", null, 1);
-		datosProductosCursor = miBD.administracionProductos("consultar", null);
-		if (datosProductosCursor.moveToFirst()) {//si hay datos que mostrar
+		datosProductosCursor = miBD.administracionProductos("seleccionar", null);
+		if (datosProductosCursor.moveToFirst() ) {//si hay datos que mostrar
 			mostrarDatosProductos();
 		} else {//sino que llame para agregar nuevos amigos...
 			mostrarMsgToask("No hay datos de amigos que mostrar, por favor agregue nuevos amigos...");
@@ -152,7 +161,50 @@ public class MainActivity extends AppCompatActivity {
 
 		registerForContextMenu(lstBuscar);
 
-		productosArrayList.addAll(productosArrayList);
+		productosArrayListCopy.addAll(productosArrayList);
+	}
+
+	private void buscarProducto(){
+		TextView Buscar = findViewById(R.id.txtBuscar);
+		Buscar.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				try {
+					productosArrayList.clear();
+					if (Buscar.getText().toString().trim().length()<1){
+						productosArrayList.addAll(productosArrayListCopy);
+					} else {
+						for (productos p : productosArrayListCopy){
+							String Codigo = p.getCodigo();
+							String Descripcion = p.getDescripcion();
+							String Marca = p.getMarca();
+							String Presentacion = p.getPresentacion();
+							String Precio = p.getPrecio();
+
+							String Buscando = Buscar.getText().toString().trim().toLowerCase();
+
+							if (Descripcion.toLowerCase().trim().contains(Buscando) || Descripcion.toLowerCase().trim().contains(Buscando) ||
+								Marca.toLowerCase().trim().contains(Buscando) || Presentacion.toLowerCase().trim().contains(Buscando) ||
+								Presentacion.toLowerCase().trim().contains(Buscando) || Precio.toLowerCase().trim().contains(Buscando)){
+								productosArrayList.add(p);
+							}
+						}
+					}
+					adaptadorImagenes adaptadorImagenes = new adaptadorImagenes(getApplicationContext(), productosArrayList);
+					lstBuscar.setAdapter(adaptadorImagenes);
+				} catch (Exception e){mostrarMsgToask(e.getMessage());}
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+
+			}
+		});
 	}
 
 	//Mostrar un mensaje
@@ -161,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 }
 
-	//otra clase
+
 	class productos {
 		String idProductos;
 		String Codigo;
@@ -185,7 +237,6 @@ public class MainActivity extends AppCompatActivity {
 		public String getIdProductos(){
 			return idProductos;
 		}
-
 		public void setIdProductos(String idProductos) {
 			this.idProductos = idProductos;
 		}

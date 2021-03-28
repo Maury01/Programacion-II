@@ -90,8 +90,9 @@ public class actNuevoProducto extends AppCompatActivity {
                 miBD.administracionProductos(accion,datos);
 
                 mostrarMsgToast("Registro guardado con exito");
-                Atras();
-            } catch (Exception e){e.getMessage();}
+
+            } catch (Exception e){mostrarMsgToast(e.getMessage());}
+            Atras();
         });
         mostrarDatosProductos();
     }
@@ -132,11 +133,16 @@ public class actNuevoProducto extends AppCompatActivity {
         if (TomarFotoIntent.resolveActivity(getPackageManager())!= null){
             File PhotoProductos = null;
             try {
-                Uri uriPhotoPtoductos = FileProvider.getUriForFile(actNuevoProducto.this, "com.example.calculadora.fileprovider", PhotoProductos);
-                TomarFotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriPhotoPtoductos);
-                startActivityForResult(TomarFotoIntent, 1);
+                PhotoProductos =CrearImagenProducto();
             } catch (Exception e) {mostrarMsgToast(e.getMessage());}
-        } else {mostrarMsgToast("No fue posible tomar la foto");}
+            if (PhotoProductos != null){
+                try {
+                    Uri uriPhotoPtoductos = FileProvider.getUriForFile(actNuevoProducto.this, "com.example.calculadora.fileprovider", PhotoProductos);
+                    TomarFotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriPhotoPtoductos);
+                    startActivityForResult(TomarFotoIntent, 1);
+                } catch (Exception e) {mostrarMsgToast(e.getMessage());}
+            } else {mostrarMsgToast("No fue posible tomar la foto");}
+        }
     }
 
     @Override
@@ -146,10 +152,13 @@ public class actNuevoProducto extends AppCompatActivity {
             if (requestCode == 1 && resultCode == RESULT_OK){
                 Bitmap imagenBitmap = BitmapFactory.decodeFile(URL);
                 imgProducto.setImageBitmap(imagenBitmap);
+                mostrarMsgToast(URL.toString());
             }
             if(requestCode == 2 && resultCode == RESULT_OK){
                 Uri path = data.getData();
                 imgProducto.setImageURI(path);
+                //URL = path.toString();
+                mostrarMsgToast(path.toString());
             }
         } catch (Exception e){mostrarMsgToast(e.getMessage());}
     }
@@ -167,7 +176,7 @@ public class actNuevoProducto extends AppCompatActivity {
     }
 
     private void ElegirDeGaleria(){
-        Intent elegir = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent elegir = new Intent(Intent.ACTION_GET_CONTENT,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         elegir.setType("image/*");
         startActivityForResult(getIntent().createChooser(elegir, "seleccione la aplicacion"), 2);
     }
