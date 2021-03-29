@@ -25,7 +25,6 @@
             android:layout_marginLeft="80dp"
             android:layout_marginTop="10dp"
             android:text="Soda  "
-            android:textColor="@color/white"
             android:textStyle="bold" />
 
         <TextView
@@ -36,7 +35,6 @@
             android:layout_marginLeft="80dp"
             android:layout_marginTop="5dp"
             android:text="Pepsi"
-            android:textColor="@color/white"
             android:textSize="12sp" />
 
         <TextView
@@ -45,7 +43,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/lblTitulo"
             android:layout_marginLeft="80dp"
-            android:textColor="@color/white"
             android:textSize="12sp" />
 
         <TextView
