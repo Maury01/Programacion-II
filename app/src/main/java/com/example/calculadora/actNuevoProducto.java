@@ -20,6 +20,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,7 +34,9 @@ public class actNuevoProducto extends AppCompatActivity {
     Intent TomarFotoIntent;
     Button RegistrarProdct, atras;
     ImageView imgProducto;
-    String URL, idProducto, accion = "nuevo";
+    String URL, idProducto, rev, resp, accion = "nuevo";
+    utilidades miUrl;
+    DetectarInternet di;
 
 
     @Override
@@ -40,7 +45,6 @@ public class actNuevoProducto extends AppCompatActivity {
         setContentView(R.layout.activity_act_nuevo_producto);
 
         miBD = new BD(getApplicationContext(),"",null, 1);
-
         atras = (Button) findViewById(R.id.btnRegresar);
         atras.setOnClickListener(v -> {
             Atras();
@@ -86,9 +90,27 @@ public class actNuevoProducto extends AppCompatActivity {
                 TempVal = (TextView) findViewById(R.id.txtPrecio);
                 String Precio = TempVal.getText().toString();
 
-                String[] datos = {idProducto, Codigo, Descripcion, Marca, Presentacion, Precio, URL};
-                miBD.administracionProductos(accion,datos);
+                JSONObject datosProduct =new JSONObject();
+                if (accion.equals("modificar") && idProducto.length() > 0 && rev.length() > 8){
+                    datosProduct.put("_id", idProducto);
+                    datosProduct.put("_rev", rev);
+                }
+                datosProduct.put("Codigo",Codigo);
+                datosProduct.put("Descripcion", Descripcion);
+                datosProduct.put("Marca", Marca);
+                datosProduct.put("Presentacion", Presentacion);
+                datosProduct.put("Precio", Precio);
+                datosProduct.put("URLFoto", URL);
 
+                String[] datos = {idProducto, Codigo, Descripcion, Marca, Presentacion, Precio, URL};
+
+                di = new DetectarInternet(getApplicationContext());
+                if (di.hayConexion()){
+                    EnviarDatosProductos objGuardarProduc = new EnviarDatosProductos(getApplicationContext());
+                    resp = objGuardarProduc.execute(datosProduct.toString()).get();
+                }
+
+                miBD.administracionProductos(accion,datos);
                 mostrarMsgToast("Registro guardado con exito");
 
             } catch (Exception e){mostrarMsgToast(e.getMessage());}
@@ -103,25 +125,26 @@ public class actNuevoProducto extends AppCompatActivity {
             accion = Recibirparametros.getString("accion");
 
             if(accion.equals("modificar")){
-                String[] datos = Recibirparametros.getStringArray("datos");
-                idProducto = datos[0];
+                JSONObject datos = new JSONObject(Recibirparametros.getString("datos")).getJSONObject("value");
+                idProducto = datos.getString("_id");
+                rev = datos.getString("_rev");
 
                 TempVal = findViewById(R.id.txtCodigo);
-                TempVal.setText(datos[1]);
+                TempVal.setText(datos.getString("Codigo"));
 
                 TempVal = findViewById(R.id.txtDescripcion);
-                TempVal.setText(datos[2]);
+                TempVal.setText(datos.getString("Descripcion"));
 
                 TempVal = findViewById(R.id.txtMarca);
-                TempVal.setText(datos[3]);
+                TempVal.setText(datos.getString("Marca"));
 
                 TempVal = findViewById(R.id.txtPresentacion);
-                TempVal.setText(datos[4]);
+                TempVal.setText(datos.getString("Presentacion"));
 
                 TempVal = findViewById(R.id.txtPrecio);
-                TempVal.setText(datos[5]);
+                TempVal.setText(datos.getString("Precio"));
 
-                URL = datos[6];
+                URL = datos.getString("URLFoto");
                 Bitmap bitmap = BitmapFactory.decodeFile(URL);
                 imgProducto.setImageBitmap(bitmap);
             }
