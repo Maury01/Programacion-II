@@ -38,7 +38,6 @@ public class actNuevoProducto extends AppCompatActivity {
     utilidades miUrl;
     DetectarInternet di;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
