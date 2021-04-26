@@ -241,12 +241,13 @@ public class MainActivity extends AppCompatActivity {
 					);
 					productosArrayListCopy.add(misproductos);
 				} while (datosProductosCursor.moveToNext());
-				adaptadorImagenes adaptadorimagenes = new adaptadorImagenes(getApplicationContext(), productosArrayList);
-				mostrarMsgToask("adaptador: "+ adaptadorimagenes.toString());
-				lstBuscar.setAdapter(adaptadorimagenes);
-				registerForContextMenu(lstBuscar);
-				productosArrayListCopy.addAll(productosArrayList);
 			}
+			
+			adaptadorImagenes adaptadorimagenes = new adaptadorImagenes(getApplicationContext(), productosArrayList);
+			mostrarMsgToask("adaptador: "+ adaptadorimagenes.toString());
+			lstBuscar.setAdapter(adaptadorimagenes);
+			registerForContextMenu(lstBuscar);
+			productosArrayListCopy.addAll(productosArrayList);
 		} catch (Exception e){mostrarMsgToask("mostrar datos: "+e.getMessage());}
 	}
 
