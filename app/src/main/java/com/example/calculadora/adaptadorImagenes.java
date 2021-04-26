@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class adaptadorImagenes extends BaseAdapter {
 
@@ -59,7 +60,8 @@ public class adaptadorImagenes extends BaseAdapter {
             Bitmap imagenBitMap = BitmapFactory.decodeFile(misProductos.getURLFoto());
             imgViewView.setImageBitmap(imagenBitMap);
         } catch (Exception e){}
-        
+
         return itemView;
     }
+
 }

@@ -227,21 +227,22 @@ public class MainActivity extends AppCompatActivity {
 					mostrarMsgToask("No hay registros que mostrar...");
 					RegistrarProduct("nuevo");
 				}
-				}  else {
-					do {
-						misproductos = new productos(
-								datosProductosCursor.getString(0),//idproducto
-								datosProductosCursor.getString(1),//codigo
-								datosProductosCursor.getString(1),//codigo
-								datosProductosCursor.getString(2),//descripcion
-								datosProductosCursor.getString(3),//marca
-								datosProductosCursor.getString(4),//presentacion
-								datosProductosCursor.getString(5), //precio
-								datosProductosCursor.getString(6) //urldefoto
-						);
-						productosArrayListCopy.add(misproductos);
-					} while (datosProductosCursor.moveToNext());
+			}  else {
+				do {
+					misproductos = new productos(
+							datosProductosCursor.getString(0),//idproducto
+							datosProductosCursor.getString(1),//codigo
+							datosProductosCursor.getString(1),//codigo
+							datosProductosCursor.getString(2),//descripcion
+							datosProductosCursor.getString(3),//marca
+							datosProductosCursor.getString(4),//presentacion
+							datosProductosCursor.getString(5), //precio
+							datosProductosCursor.getString(6) //urldefoto
+					);
+					productosArrayListCopy.add(misproductos);
+				} while (datosProductosCursor.moveToNext());
 				adaptadorImagenes adaptadorimagenes = new adaptadorImagenes(getApplicationContext(), productosArrayList);
+				mostrarMsgToask("adaptador: "+ adaptadorimagenes.toString());
 				lstBuscar.setAdapter(adaptadorimagenes);
 				registerForContextMenu(lstBuscar);
 				productosArrayListCopy.addAll(productosArrayList);
