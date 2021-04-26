@@ -34,7 +34,7 @@ public class actNuevoProducto extends AppCompatActivity {
     Intent TomarFotoIntent;
     Button RegistrarProdct, atras;
     ImageView imgProducto;
-    String URL, idProducto, rev, resp, accion = "nuevo";
+    String URL, idProducto, rev, accion = "nuevo";
     utilidades miUrl;
     DetectarInternet di;
 
@@ -44,12 +44,15 @@ public class actNuevoProducto extends AppCompatActivity {
         setContentView(R.layout.activity_act_nuevo_producto);
 
         miBD = new BD(getApplicationContext(),"",null, 1);
+        imgProducto = findViewById(R.id.imgFoto);
         atras = (Button) findViewById(R.id.btnRegresar);
+        RegistrarProdct = (Button) findViewById(R.id.btnRegistrar);
+
         atras.setOnClickListener(v -> {
             Atras();
         });
 
-        imgProducto = findViewById(R.id.imgFoto);
+
         imgProducto.setOnClickListener(v -> {
             final CharSequence[] opciones = {"Tomar Foto", "Abrir de Galeria", "Cancelar"};
             final AlertDialog.Builder alerta = new AlertDialog.Builder(actNuevoProducto.this);
@@ -71,7 +74,6 @@ public class actNuevoProducto extends AppCompatActivity {
 
         });
 
-        RegistrarProdct = (Button) findViewById(R.id.btnRegistrar);
         RegistrarProdct.setOnClickListener(v -> {
             try {
                 TempVal = (TextView) findViewById(R.id.txtCodigo);
@@ -90,7 +92,7 @@ public class actNuevoProducto extends AppCompatActivity {
                 String Precio = TempVal.getText().toString();
 
                 JSONObject datosProduct =new JSONObject();
-                if (accion.equals("modificar") && idProducto.length() > 0 && rev.length() > 8){
+                if (accion.equals("modificar") && idProducto.length() > 0 && rev.length() > 0){
                     datosProduct.put("_id", idProducto);
                     datosProduct.put("_rev", rev);
                 }
@@ -106,14 +108,14 @@ public class actNuevoProducto extends AppCompatActivity {
                 di = new DetectarInternet(getApplicationContext());
                 if (di.hayConexion()){
                     EnviarDatosProductos objGuardarProduc = new EnviarDatosProductos(getApplicationContext());
-                    resp = objGuardarProduc.execute(datosProduct.toString()).get();
+                    String resp = objGuardarProduc.execute(datosProduct.toString()).get();
                 }
 
                 miBD.administracionProductos(accion,datos);
                 mostrarMsgToast("Registro guardado con exito");
+                Atras();
+            } catch (Exception e){mostrarMsgToast("boton enviar: "+e.getMessage());}
 
-            } catch (Exception e){mostrarMsgToast(e.getMessage());}
-            Atras();
         });
         mostrarDatosProductos();
     }
@@ -147,7 +149,7 @@ public class actNuevoProducto extends AppCompatActivity {
                 Bitmap bitmap = BitmapFactory.decodeFile(URL);
                 imgProducto.setImageBitmap(bitmap);
             }
-        } catch (Exception e){mostrarMsgToast(e.getMessage());}
+        } catch (Exception e){mostrarMsgToast("act mostrar datos"+e.getMessage());}
     }
 
     private void tomarFotoProducto(){

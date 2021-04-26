@@ -64,7 +64,7 @@ public class EnviarDatosProductos extends AsyncTask<String, String, String> {
             jsonResponse = stringBuffer.toString();
             return jsonResponse;
         } catch (Exception e){
-            Log.d("ENVIANDO", "Error: "+e.getMessage());}
+            Log.d("ENVIANDO", "Error enviar: "+e.getMessage());}
 
         return null;
     }
