@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
 					productosArrayListCopy.add(misproductos);
 				} while (datosProductosCursor.moveToNext());
 			}
-			
+
 			adaptadorImagenes adaptadorimagenes = new adaptadorImagenes(getApplicationContext(), productosArrayList);
 			mostrarMsgToask("adaptador: "+ adaptadorimagenes.toString());
 			lstBuscar.setAdapter(adaptadorimagenes);

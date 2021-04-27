@@ -43,10 +43,10 @@ public class actNuevoProducto extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_nuevo_producto);
 
-        miBD = new BD(getApplicationContext(),"",null, 1);
-        imgProducto = findViewById(R.id.imgFoto);
-        atras = (Button) findViewById(R.id.btnRegresar);
-        RegistrarProdct = (Button) findViewById(R.id.btnRegistrar);
+        //miBD = new BD(getApplicationContext(),"",null, 1);
+        //imgProducto = findViewById(R.id.imgFoto);
+        //atras = (Button) findViewById(R.id.btnRegresar);
+        //RegistrarProdct = (Button) findViewById(R.id.btnRegistrar);
 
         atras.setOnClickListener(v -> {
             Atras();
@@ -76,34 +76,34 @@ public class actNuevoProducto extends AppCompatActivity {
 
         RegistrarProdct.setOnClickListener(v -> {
             try {
-                TempVal = (TextView) findViewById(R.id.txtCodigo);
-                String Codigo = TempVal.getText().toString();
+                //TempVal = (TextView) findViewById(R.id.txtCodigo);
+                //String Codigo = TempVal.getText().toString();
 
-                TempVal = (TextView) findViewById(R.id.txtDescripcion);
-                String Descripcion = TempVal.getText().toString();
+                //TempVal = (TextView) findViewById(R.id.txtDescripcion);
+                //String Descripcion = TempVal.getText().toString();
 
-                TempVal = (TextView) findViewById(R.id.txtMarca);
-                String Marca = TempVal.getText().toString();
+                //TempVal = (TextView) findViewById(R.id.txtMarca);
+                //String Marca = TempVal.getText().toString();
 
-                TempVal = (TextView) findViewById(R.id.txtPresentacion);
-                String Presentacion = TempVal.getText().toString();
+                //TempVal = (TextView) findViewById(R.id.txtPresentacion);
+               // String Presentacion = TempVal.getText().toString();
 
-                TempVal = (TextView) findViewById(R.id.txtPrecio);
-                String Precio = TempVal.getText().toString();
+                //TempVal = (TextView) findViewById(R.id.txtPrecio);
+                //String Precio = TempVal.getText().toString();
 
                 JSONObject datosProduct =new JSONObject();
                 if (accion.equals("modificar") && idProducto.length() > 0 && rev.length() > 0){
                     datosProduct.put("_id", idProducto);
                     datosProduct.put("_rev", rev);
                 }
-                datosProduct.put("Codigo",Codigo);
-                datosProduct.put("Descripcion", Descripcion);
-                datosProduct.put("Marca", Marca);
-                datosProduct.put("Presentacion", Presentacion);
-                datosProduct.put("Precio", Precio);
-                datosProduct.put("URLFoto", URL);
+                //datosProduct.put("Codigo",Codigo);
+                //datosProduct.put("Descripcion", Descripcion);
+                //datosProduct.put("Marca", Marca);
+                //datosProduct.put("Presentacion", Presentacion);
+                //datosProduct.put("Precio", Precio);
+                //datosProduct.put("URLFoto", URL);
 
-                String[] datos = {idProducto, Codigo, Descripcion, Marca, Presentacion, Precio, URL};
+                //String[] datos = {idProducto, Codigo, Descripcion, Marca, Presentacion, Precio, URL};
 
                 di = new DetectarInternet(getApplicationContext());
                 if (di.hayConexion()){
@@ -111,7 +111,7 @@ public class actNuevoProducto extends AppCompatActivity {
                     String resp = objGuardarProduc.execute(datosProduct.toString()).get();
                 }
 
-                miBD.administracionProductos(accion,datos);
+                //miBD.administracionProductos(accion,datos);
                 mostrarMsgToast("Registro guardado con exito");
                 Atras();
             } catch (Exception e){mostrarMsgToast("boton enviar: "+e.getMessage());}
@@ -130,20 +130,20 @@ public class actNuevoProducto extends AppCompatActivity {
                 idProducto = datos.getString("_id");
                 rev = datos.getString("_rev");
 
-                TempVal = findViewById(R.id.txtCodigo);
-                TempVal.setText(datos.getString("Codigo"));
+                //TempVal = findViewById(R.id.txtCodigo);
+                //TempVal.setText(datos.getString("Codigo"));
 
-                TempVal = findViewById(R.id.txtDescripcion);
-                TempVal.setText(datos.getString("Descripcion"));
+                //TempVal = findViewById(R.id.txtDescripcion);
+                //TempVal.setText(datos.getString("Descripcion"));
 
-                TempVal = findViewById(R.id.txtMarca);
-                TempVal.setText(datos.getString("Marca"));
+                //TempVal = findViewById(R.id.txtMarca);
+                //TempVal.setText(datos.getString("Marca"));
 
-                TempVal = findViewById(R.id.txtPresentacion);
-                TempVal.setText(datos.getString("Presentacion"));
+                //TempVal = findViewById(R.id.txtPresentacion);
+                //TempVal.setText(datos.getString("Presentacion"));
 
-                TempVal = findViewById(R.id.txtPrecio);
-                TempVal.setText(datos.getString("Precio"));
+                //TempVal = findViewById(R.id.txtPrecio);
+                //TempVal.setText(datos.getString("Precio"));
 
                 URL = datos.getString("URLFoto");
                 Bitmap bitmap = BitmapFactory.decodeFile(URL);

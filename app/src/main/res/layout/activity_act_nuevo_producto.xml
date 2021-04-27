@@ -18,11 +18,11 @@
         app:iconTint="#020202" />
 
     <TextView
-        android:id="@+id/txtNuevoProducto"
+        android:id="@+id/txtNuevaPelicula"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:text="@string/TituloRegProdct"
+        android:text="@string/TituloRegPeli"
         android:textAlignment="center"
         android:textSize="25dp"
         app:layout_constraintStart_toEndOf="@+id/btnRegresar"
@@ -30,53 +30,62 @@
 
     <ImageButton
         android:id="@+id/imgFoto"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="156dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="104dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNuevoProducto" />
+        app:layout_constraintTop_toBottomOf="@+id/txtNuevaPelicula" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="354dp"
+        app:layout_constraintTop_toBottomOf="@+id/imgFoto"
+        tools:layout_editor_absoluteX="-1dp">
+
+
+    </ScrollView>
 
     <EditText
         android:id="@+id/txtCodigo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="@string/CodProducto"
+        android:hint="@string/CodPeli"
         app:layout_constraintTop_toBottomOf="@+id/imgFoto"
         tools:layout_editor_absoluteX="0dp" />
     <EditText
-        android:id="@+id/txtDescripcion"
+        android:id="@+id/txtTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="@string/DescripProducto"
+        android:hint="@string/TituloPeli"
         app:layout_constraintTop_toBottomOf="@+id/txtCodigo"
         tools:layout_editor_absoluteX="0dp" />
     <EditText
-        android:id="@+id/txtPresentacion"
+        android:id="@+id/txtSinopsis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="@string/PresentacionProducto"
-        app:layout_constraintTop_toBottomOf="@+id/txtMarca"
+        android:hint="@string/Sinopsispeli"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitulo"
         tools:layout_editor_absoluteX="0dp" />
     <EditText
-        android:id="@+id/txtMarca"
+        android:id="@+id/txtDuracion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="@string/MarcaProducto"
-        app:layout_constraintTop_toBottomOf="@+id/txtDescripcion"
+        android:hint="@string/Duracionpeli"
+        app:layout_constraintTop_toBottomOf="@+id/txtSinopsis"
         tools:layout_editor_absoluteX="0dp" />
     <EditText
         android:id="@+id/txtPrecio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="@string/PrecioProducto"
-        app:layout_constraintTop_toBottomOf="@+id/txtPresentacion"
+        android:hint="@string/PrecioPeli"
+        app:layout_constraintTop_toBottomOf="@+id/txtDuracion"
         android:inputType="numberDecimal"
         tools:layout_editor_absoluteX="0dp" />
 
