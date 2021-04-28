@@ -10,5 +10,8 @@
     <string name="Sinopsispeli">Sinopsis</string>
     <string name="Duracionpeli">Duracion</string>
     <string name="PrecioPeli">Precio</string>
+    <string name="ElegirTrailer">Elegir trailer</string>
+    <string name="VerTrailer">Ver trailer</string>
+    <string name="lblVideo">Video: </string>
 
 </resources>

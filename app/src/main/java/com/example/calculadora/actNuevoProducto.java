@@ -7,20 +7,17 @@ import androidx.core.content.FileProvider;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.RestrictionEntry;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -30,11 +27,11 @@ import java.util.Date;
 public class actNuevoProducto extends AppCompatActivity {
 
     BD miBD;
-    TextView TempVal;
+    TextView TempVal, DireccionVideo;
     Intent TomarFotoIntent;
-    Button RegistrarProdct, atras;
-    ImageView imgProducto;
-    String URL, idProducto, rev, accion = "nuevo";
+    Button RegistrarPeli, ElegirTrailer, atras;
+    ImageView imgPelicula;
+    String URL, URLTrailer, idPelicula, rev, accion = "nuevo";
     utilidades miUrl;
     DetectarInternet di;
 
@@ -43,17 +40,20 @@ public class actNuevoProducto extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_nuevo_producto);
 
-        //miBD = new BD(getApplicationContext(),"",null, 1);
-        //imgProducto = findViewById(R.id.imgFoto);
-        //atras = (Button) findViewById(R.id.btnRegresar);
-        //RegistrarProdct = (Button) findViewById(R.id.btnRegistrar);
+        miBD = new BD(getApplicationContext(),"",null, 1);
+        imgPelicula = findViewById(R.id.imgFoto);
+        atras = (Button) findViewById(R.id.btnRegresar);
+        RegistrarPeli = (Button) findViewById(R.id.btnRegistrar);
+        ElegirTrailer = (Button) findViewById(R.id.btnVideo);
+        DireccionVideo = (TextView) findViewById(R.id.lblVideo);
 
         atras.setOnClickListener(v -> {
             Atras();
         });
 
 
-        imgProducto.setOnClickListener(v -> {
+
+        imgPelicula.setOnClickListener(v -> {
             final CharSequence[] opciones = {"Tomar Foto", "Abrir de Galeria", "Cancelar"};
             final AlertDialog.Builder alerta = new AlertDialog.Builder(actNuevoProducto.this);
             alerta.setTitle("Selecciona una Opción");
@@ -74,80 +74,85 @@ public class actNuevoProducto extends AppCompatActivity {
 
         });
 
-        RegistrarProdct.setOnClickListener(v -> {
+        RegistrarPeli.setOnClickListener(v -> {
             try {
-                //TempVal = (TextView) findViewById(R.id.txtCodigo);
-                //String Codigo = TempVal.getText().toString();
+                TempVal = (TextView) findViewById(R.id.txtCodigo);
+                String Codigo = TempVal.getText().toString();
 
-                //TempVal = (TextView) findViewById(R.id.txtDescripcion);
-                //String Descripcion = TempVal.getText().toString();
+                TempVal = (TextView) findViewById(R.id.txtTitulo);
+                String Titulo = TempVal.getText().toString();
 
-                //TempVal = (TextView) findViewById(R.id.txtMarca);
-                //String Marca = TempVal.getText().toString();
+                TempVal = (TextView) findViewById(R.id.txtSinopsis);
+                String Sinopsis = TempVal.getText().toString();
 
-                //TempVal = (TextView) findViewById(R.id.txtPresentacion);
-               // String Presentacion = TempVal.getText().toString();
+                TempVal = (TextView) findViewById(R.id.txtDuracion);
+                String Duracion = TempVal.getText().toString();
 
-                //TempVal = (TextView) findViewById(R.id.txtPrecio);
-                //String Precio = TempVal.getText().toString();
+                TempVal = (TextView) findViewById(R.id.txtPrecio);
+                String Precio = TempVal.getText().toString();
 
-                JSONObject datosProduct =new JSONObject();
-                if (accion.equals("modificar") && idProducto.length() > 0 && rev.length() > 0){
-                    datosProduct.put("_id", idProducto);
-                    datosProduct.put("_rev", rev);
+                JSONObject datosPeli =new JSONObject();
+                if (accion.equals("modificar") && idPelicula.length() > 0 && rev.length() > 0){
+                    datosPeli.put("_id", idPelicula);
+                    datosPeli.put("_rev", rev);
                 }
-                //datosProduct.put("Codigo",Codigo);
-                //datosProduct.put("Descripcion", Descripcion);
-                //datosProduct.put("Marca", Marca);
-                //datosProduct.put("Presentacion", Presentacion);
-                //datosProduct.put("Precio", Precio);
-                //datosProduct.put("URLFoto", URL);
+                datosPeli.put("Codigo",Codigo);
+                datosPeli.put("Descripcion", Titulo);
+                datosPeli.put("Marca", Sinopsis);
+                datosPeli.put("Presentacion", Duracion);
+                datosPeli.put("Precio", Precio);
+                datosPeli.put("URLFoto", URL);
+                datosPeli.put("URLTrailer", URLTrailer);
 
-                //String[] datos = {idProducto, Codigo, Descripcion, Marca, Presentacion, Precio, URL};
+                String[] datos = {idPelicula, Codigo, Titulo, Sinopsis, Duracion, Precio, URL, URLTrailer};
 
                 di = new DetectarInternet(getApplicationContext());
                 if (di.hayConexion()){
-                    EnviarDatosProductos objGuardarProduc = new EnviarDatosProductos(getApplicationContext());
-                    String resp = objGuardarProduc.execute(datosProduct.toString()).get();
+                    EnviarDatosPelicula objGuardarPeli = new EnviarDatosPelicula(getApplicationContext());
+                    String resp = objGuardarPeli.execute(datosPeli.toString()).get();
                 }
 
-                //miBD.administracionProductos(accion,datos);
+                miBD.administracionPeliculas(accion,datos);
                 mostrarMsgToast("Registro guardado con exito");
                 Atras();
             } catch (Exception e){mostrarMsgToast("boton enviar: "+e.getMessage());}
 
         });
-        mostrarDatosProductos();
+        mostrarDatosPeliculas();
     }
 
-    public void mostrarDatosProductos(){
+    public void mostrarDatosPeliculas(){
         try {
             Bundle Recibirparametros = getIntent().getExtras();
             accion = Recibirparametros.getString("accion");
 
             if(accion.equals("modificar")){
                 JSONObject datos = new JSONObject(Recibirparametros.getString("datos")).getJSONObject("value");
-                idProducto = datos.getString("_id");
+                idPelicula = datos.getString("_id");
                 rev = datos.getString("_rev");
 
-                //TempVal = findViewById(R.id.txtCodigo);
-                //TempVal.setText(datos.getString("Codigo"));
+                TempVal = findViewById(R.id.txtCodigo);
+                TempVal.setText(datos.getString("Codigo"));
 
-                //TempVal = findViewById(R.id.txtDescripcion);
-                //TempVal.setText(datos.getString("Descripcion"));
+                TempVal = findViewById(R.id.txtTitulo);
+                TempVal.setText(datos.getString("Titulo"));
 
-                //TempVal = findViewById(R.id.txtMarca);
-                //TempVal.setText(datos.getString("Marca"));
+                TempVal = findViewById(R.id.txtSinopsis);
+                TempVal.setText(datos.getString("Snopsis"));
 
-                //TempVal = findViewById(R.id.txtPresentacion);
-                //TempVal.setText(datos.getString("Presentacion"));
+                TempVal = findViewById(R.id.txtDuracion);
+                TempVal.setText(datos.getString("Duracion"));
 
-                //TempVal = findViewById(R.id.txtPrecio);
-                //TempVal.setText(datos.getString("Precio"));
+                TempVal = findViewById(R.id.txtPrecio);
+                TempVal.setText(datos.getString("Precio"));
 
                 URL = datos.getString("URLFoto");
                 Bitmap bitmap = BitmapFactory.decodeFile(URL);
-                imgProducto.setImageBitmap(bitmap);
+                imgPelicula.setImageBitmap(bitmap);
+
+                URLTrailer = datos.getString("URLTrailer");
+                DireccionVideo.setText(URLTrailer);
+
             }
         } catch (Exception e){mostrarMsgToast("act mostrar datos"+e.getMessage());}
     }
@@ -175,12 +180,12 @@ public class actNuevoProducto extends AppCompatActivity {
         try {
             if (requestCode == 1 && resultCode == RESULT_OK){
                 Bitmap imagenBitmap = BitmapFactory.decodeFile(URL);
-                imgProducto.setImageBitmap(imagenBitmap);
+                imgPelicula.setImageBitmap(imagenBitmap);
                 mostrarMsgToast(URL.toString());
             }
             if(requestCode == 2 && resultCode == RESULT_OK){
                 Uri path = data.getData();
-                imgProducto.setImageURI(path);
+                imgPelicula.setImageURI(path);
                 //URL = path.toString();
                 mostrarMsgToast(path.toString());
             }
@@ -203,6 +208,10 @@ public class actNuevoProducto extends AppCompatActivity {
         Intent elegir = new Intent(Intent.ACTION_GET_CONTENT,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         elegir.setType("image/*");
         startActivityForResult(getIntent().createChooser(elegir, "seleccione la aplicacion"), 2);
+    }
+
+    private void VerTrailer(){
+
     }
 
     public void Atras (){

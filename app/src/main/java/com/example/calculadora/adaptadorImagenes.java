@@ -10,16 +10,15 @@ import java.util.ArrayList;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class adaptadorImagenes extends BaseAdapter {
 
     Context context;
-    ArrayList<productos> datosProductosArrayList;
+    ArrayList<peliculas> datosProductosArrayList;
     LayoutInflater layoutInflater;
-    productos misProductos;
+    peliculas misPeliculas;
     
-    public adaptadorImagenes(Context context, ArrayList<productos> datosProductosArrayList){
+    public adaptadorImagenes(Context context, ArrayList<peliculas> datosProductosArrayList){
         this.context = context;
         this.datosProductosArrayList = datosProductosArrayList;
     }
@@ -35,7 +34,7 @@ public class adaptadorImagenes extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return Long.parseLong(datosProductosArrayList.get(position).getIdProductos());
+        return Long.parseLong(datosProductosArrayList.get(position).getIdPelicula());
     }
 
     @Override
@@ -45,19 +44,19 @@ public class adaptadorImagenes extends BaseAdapter {
         TextView tempval = itemView.findViewById(R.id.lblTitulo);
         ImageView imgViewView = itemView.findViewById(R.id.imgPhoto);
         try{
-            misProductos = datosProductosArrayList.get(position);
-            tempval.setText(misProductos.getDescripcion());
+            misPeliculas = datosProductosArrayList.get(position);
+            tempval.setText(misPeliculas.getTitulo());
 
             tempval = itemView.findViewById(R.id.lblMarca);
-            tempval.setText(misProductos.getMarca());
+            tempval.setText(misPeliculas.getDuracion());
 
             tempval = itemView.findViewById(R.id.lblPresentacion);
-            tempval.setText(misProductos.getPresentacion());
+            tempval.setText(misPeliculas.getCodigo());
 
             tempval = itemView.findViewById(R.id.lblPrecio);
-            tempval.setText(misProductos.getPrecio());
+            tempval.setText(misPeliculas.getPrecio());
 
-            Bitmap imagenBitMap = BitmapFactory.decodeFile(misProductos.getURLFoto());
+            Bitmap imagenBitMap = BitmapFactory.decodeFile(misPeliculas.getURLFoto());
             imgViewView.setImageBitmap(imagenBitMap);
         } catch (Exception e){}
 

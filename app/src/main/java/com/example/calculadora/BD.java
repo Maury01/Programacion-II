@@ -26,7 +26,7 @@ public class BD extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
-    public Cursor administracionProductos(String accion, String[] datos){
+    public Cursor administracionPeliculas(String accion, String[] datos){
         try {
             Cursor datosCursor = null;
             SQLiteDatabase sqLiteDatabaseW = getWritableDatabase();

@@ -13,12 +13,12 @@ import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class EnviarDatosProductos extends AsyncTask<String, String, String> {
+public class EnviarDatosPelicula extends AsyncTask<String, String, String> {
     Context context;
     utilidades uc = new utilidades();
     String resp;
 
-    public EnviarDatosProductos(Context context){
+    public EnviarDatosPelicula(Context context){
         this.context = context;
     }
     @Override
