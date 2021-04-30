@@ -34,20 +34,20 @@ public class BD extends SQLiteOpenHelper {
 
             switch (accion){
                 case "nuevo":
-                    sqLiteDatabaseW.execSQL("INSERT INTO tblPeliculas(Codigo, Titulo, Sinopsis, Duracion, Precio, URLFoto, URLTrailer) VALUES ('"+datos[1]+"','"+datos[2]+"','"+datos[3]+"','"+datos[4]+"','"+datos[5]+"','"+datos[6]+"','"+datos[7]+"'");
+                    sqLiteDatabaseW.execSQL("INSERT INTO tblPeliculas(Codigo, Titulo, Sinopsis, Duracion, Precio, URLFoto, URLTrailer) VALUES ('"+datos[1]+"','"+datos[2]+"','"+datos[3]+"','"+datos[4]+"','"+datos[5]+"','"+datos[6]+"','"+datos[7]+"')");
                     break;
                 case "seleccionar":
                     datosCursor = sqLiteDatabaseR.rawQuery("SELECT * FROM tblPeliculas ORDER BY Titulo", null);
                     break;
                 case "modificar":
-                    sqLiteDatabaseW.execSQL("UPDATE tblPeliculas SET Codigo='"+datos[1]+"', Titulo='"+datos[2]+"', Sinopsis='"+datos[3]+"', Duracion='"+datos[4]+"', Precio='"+datos[5]+"', URLFoto='"+datos[6]+"', URLTrailer='"+datos[7]+"' WHERE idProductos='"+datos[0]+"");
+                    sqLiteDatabaseW.execSQL("UPDATE tblPeliculas SET Codigo='"+datos[1]+"', Titulo='"+datos[2]+"', Sinopsis='"+datos[3]+"', Duracion='"+datos[4]+"', Precio='"+datos[5]+"', URLFoto='"+datos[6]+"', URLTrailer='"+datos[7]+"' WHERE idPelicula='"+datos[0]+"'");
                     break;
                 case "eliminar":
                     sqLiteDatabaseW.execSQL("DELETE FROM tblPeliculas WHERE idPelicula='"+datos[0]+"'");
             }
             return datosCursor;
         } catch (Exception e){
-            Toast.makeText(micontext, "Error en la administracion de la BD "+ e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(micontext, "Error en admin. BD: "+ e.getMessage(), Toast.LENGTH_LONG).show();
             return null;
         }
     }

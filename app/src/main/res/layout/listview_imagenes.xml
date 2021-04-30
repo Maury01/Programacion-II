@@ -24,32 +24,35 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="10dp"
-            android:text="Soda  "
+            android:text="Kimestu no Yaiba: Muge rechan-hen"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/lblMarca"
+            android:id="@+id/lblDuracion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/lblPresentacion"
+            android:layout_below="@id/lblCodigo"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="5dp"
-            android:text="Pepsi"
+            android:text="120min"
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/lblPresentacion"
+            android:id="@+id/lblCodigo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/lblTitulo"
             android:layout_marginLeft="80dp"
+            android:text="A1"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/lblPrecio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="79dp" />
+            android:layout_marginTop="43dp"
+            android:layout_marginEnd="44dp"
+            android:text="$6.00" />
 </RelativeLayout>

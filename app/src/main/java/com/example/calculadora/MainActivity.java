@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 	utilidades u = new utilidades();
 	DetectarInternet di;
 	int position = 0;
+	String URLTrailer;
 
 
 	@Override
@@ -59,10 +60,10 @@ public class MainActivity extends AppCompatActivity {
 		btnRegistrar.setOnClickListener(v -> {
 			RegistrarPeliculas("nuevo");
 		});
-		try {
+		//try {
 			obteberDatosPeliculas();
 			buscarPeliculas();
-		} catch (Exception e){mostrarMsgToask("On create main: " + e.getMessage());}
+		//} catch (Exception e){mostrarMsgToask("On create main: " + e.getMessage());}
 	}
 
 	@Override //Se contruyé el menú.
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 					eliminarPelicula();
 					break;
 				case R.id.mnxTrailer:
-					//VerTrailer();
+					VerTrailer();
 					break;
 			}
 		} catch (Exception ex) {
@@ -236,9 +237,9 @@ public class MainActivity extends AppCompatActivity {
 							datosPeliculasCursor.getString(0),//idproducto
 							datosPeliculasCursor.getString(1),//codigo
 							datosPeliculasCursor.getString(1),//codigo
-							datosPeliculasCursor.getString(2),//descripcion
-							datosPeliculasCursor.getString(3),//marca
-							datosPeliculasCursor.getString(4),//presentacion
+							datosPeliculasCursor.getString(2),//Titulo
+							datosPeliculasCursor.getString(3),//Sinopsis
+							datosPeliculasCursor.getString(4),//Durarion
 							datosPeliculasCursor.getString(5), //precio
 							datosPeliculasCursor.getString(6), //urldefoto
 							datosPeliculasCursor.getString(7)//urlTrailer
@@ -246,9 +247,8 @@ public class MainActivity extends AppCompatActivity {
 					peliculasArrayListCopy.add(mispeliculas);
 				} while (datosPeliculasCursor.moveToNext());
 			}
-
-			adaptadorImagenes adaptadorimagenes = new adaptadorImagenes(getApplicationContext(), peliculasArrayList);
-			lstBuscar.setAdapter(adaptadorimagenes);
+			adaptadorImagenes adaptadorImagenes = new adaptadorImagenes(getApplicationContext(), peliculasArrayList);
+			lstBuscar.setAdapter(adaptadorImagenes);
 			registerForContextMenu(lstBuscar);
 			peliculasArrayListCopy.addAll(peliculasArrayList);
 		} catch (Exception e){mostrarMsgToask("mostrar datos: "+e.getMessage());}
@@ -379,6 +379,10 @@ public class MainActivity extends AppCompatActivity {
 			}
 			return result.toString();
 		}
+	}
+	public void VerTrailer(){
+		Intent reproducir= new Intent(getApplicationContext(), Reproductor.class);
+		startActivity(reproducir);
 	}
 }
 

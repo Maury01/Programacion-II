@@ -14,27 +14,29 @@ import android.widget.TextView;
 public class adaptadorImagenes extends BaseAdapter {
 
     Context context;
-    ArrayList<peliculas> datosProductosArrayList;
+    ArrayList<peliculas> datosPeliculasArrayList;
     LayoutInflater layoutInflater;
     peliculas misPeliculas;
     
-    public adaptadorImagenes(Context context, ArrayList<peliculas> datosProductosArrayList){
+    public adaptadorImagenes(Context context, ArrayList<peliculas> datosPeliculasArrayList){
         this.context = context;
-        this.datosProductosArrayList = datosProductosArrayList;
+        this.datosPeliculasArrayList = datosPeliculasArrayList;
     }
 
     @Override
     public int getCount() {
-        return datosProductosArrayList.size();
+
+        return datosPeliculasArrayList.size();
     }
     @Override
     public Object getItem(int position) {
-        return datosProductosArrayList.get(position);
+
+        return datosPeliculasArrayList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return Long.parseLong(datosProductosArrayList.get(position).getIdPelicula());
+        return Long.parseLong(datosPeliculasArrayList.get(position).getIdPelicula());
     }
 
     @Override
@@ -44,23 +46,21 @@ public class adaptadorImagenes extends BaseAdapter {
         TextView tempval = itemView.findViewById(R.id.lblTitulo);
         ImageView imgViewView = itemView.findViewById(R.id.imgPhoto);
         try{
-            misPeliculas = datosProductosArrayList.get(position);
+            misPeliculas = datosPeliculasArrayList.get(position);
             tempval.setText(misPeliculas.getTitulo());
 
-            tempval = itemView.findViewById(R.id.lblMarca);
+            tempval = itemView.findViewById(R.id.lblDuracion);
             tempval.setText(misPeliculas.getDuracion());
 
-            tempval = itemView.findViewById(R.id.lblPresentacion);
+            tempval = itemView.findViewById(R.id.lblCodigo);
             tempval.setText(misPeliculas.getCodigo());
 
             tempval = itemView.findViewById(R.id.lblPrecio);
-            tempval.setText(misPeliculas.getPrecio());
+            tempval.setText("$"+misPeliculas.getPrecio());
 
             Bitmap imagenBitMap = BitmapFactory.decodeFile(misPeliculas.getURLFoto());
             imgViewView.setImageBitmap(imagenBitMap);
         } catch (Exception e){}
-
         return itemView;
     }
-
 }
