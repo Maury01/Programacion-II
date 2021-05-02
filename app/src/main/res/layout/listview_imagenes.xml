@@ -25,7 +25,8 @@
             android:layout_marginLeft="80dp"
             android:layout_marginTop="10dp"
             android:text="Kimestu no Yaiba: Muge rechan-hen"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/lblDuracion"
@@ -35,7 +36,8 @@
             android:layout_marginLeft="80dp"
             android:layout_marginTop="5dp"
             android:text="120min"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/lblCodigo"
@@ -44,7 +46,8 @@
             android:layout_below="@id/lblTitulo"
             android:layout_marginLeft="80dp"
             android:text="A1"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/lblPrecio"
@@ -54,5 +57,6 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="43dp"
             android:layout_marginEnd="44dp"
-            android:text="$6.00" />
+            android:text="$6.00"
+            android:textColor="@color/black"/>
 </RelativeLayout>

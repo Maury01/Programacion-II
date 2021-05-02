@@ -6,25 +6,26 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.MediaController;
 import android.widget.VideoView;
-
+//Mauricio Enrique Vásquez Ramirez	USIS007620
+//Michelle Brisette Perez Caballero USIS006620
+//Elias Mauricio Parada Lozano		USIS030320
+//Lisseth Alexandra Gomez Venegas	USIS005620
 public class Reproductor extends AppCompatActivity {
     VideoView Video;
-    String URLTrailer;
+    String URLTrailer = "/storage/emulated/0/Download/a.mp4";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reproductor);
 
-        URLTrailer = "/storage/emulated/0/xd/c mamo.mp4";
         Video  = (VideoView) findViewById(R.id.vdoVideo);
-        ObtenerURLVideo();
-    }
-
-    public void ObtenerURLVideo(){
-        Video.setVideoURI(Uri.parse(URLTrailer));
         MediaController mediaController = new MediaController(this);
         Video.setMediaController(mediaController);
+        Video.setVideoPath(URLTrailer);
+        Video.start();
+
+
         mediaController.setAnchorView(Video);
     }
 }

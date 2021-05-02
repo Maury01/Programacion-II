@@ -7,6 +7,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+//Mauricio Enrique Vásquez Ramirez	USIS007620
+//Michelle Brisette Perez Caballero USIS006620
+//Elias Mauricio Parada Lozano		USIS030320
+//Lisseth Alexandra Gomez Venegas	USIS005620
 
 public class BD extends SQLiteOpenHelper {
     Context micontext;
@@ -27,8 +31,8 @@ public class BD extends SQLiteOpenHelper {
     }
 
     public Cursor administracionPeliculas(String accion, String[] datos){
+        Cursor datosCursor = null;
         try {
-            Cursor datosCursor = null;
             SQLiteDatabase sqLiteDatabaseW = getWritableDatabase();
             SQLiteDatabase sqLiteDatabaseR = getReadableDatabase();
 
@@ -48,7 +52,7 @@ public class BD extends SQLiteOpenHelper {
             return datosCursor;
         } catch (Exception e){
             Toast.makeText(micontext, "Error en admin. BD: "+ e.getMessage(), Toast.LENGTH_LONG).show();
-            return null;
+            return datosCursor;
         }
     }
 }

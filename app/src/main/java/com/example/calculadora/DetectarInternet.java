@@ -6,6 +6,10 @@ import android.net.Network;
 import android.net.NetworkInfo;
 
 import java.net.NetworkInterface;
+//Mauricio Enrique Vásquez Ramirez	USIS007620
+//Michelle Brisette Perez Caballero USIS006620
+//Elias Mauricio Parada Lozano		USIS030320
+//Lisseth Alexandra Gomez Venegas	USIS005620
 
 public class DetectarInternet {
     private Context  context;

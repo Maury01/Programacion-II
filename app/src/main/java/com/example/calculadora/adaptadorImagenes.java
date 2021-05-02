@@ -12,6 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class adaptadorImagenes extends BaseAdapter {
+    //Mauricio Enrique Vásquez Ramirez	USIS007620
+//Michelle Brisette Perez Caballero USIS006620
+//Elias Mauricio Parada Lozano		USIS030320
+//Lisseth Alexandra Gomez Venegas	USIS005620
 
     Context context;
     ArrayList<peliculas> datosPeliculasArrayList;

@@ -34,6 +34,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+//Mauricio Enrique Vásquez Ramirez	USIS007620
+//Michelle Brisette Perez Caballero USIS006620
+//Elias Mauricio Parada Lozano		USIS030320
+//Lisseth Alexandra Gomez Venegas	USIS005620
+
 public class MainActivity extends AppCompatActivity {
 	FloatingActionButton btnRegistrar;
 	BD miBD;
@@ -72,16 +77,9 @@ public class MainActivity extends AppCompatActivity {
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.menu_productos, menu);
 		try {
-			if (di.hayConexion()){
-				AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
-				position = adapterContextMenuInfo.position;
-				menu.setHeaderTitle(JSONArrayDatosPeli.getJSONObject(position).getJSONObject("value").getString("Titulo"));
-			} else {
-				AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo)menuInfo;
-				datosPeliculasCursor.moveToPosition(adapterContextMenuInfo.position);
-
-				menu.setHeaderTitle(datosPeliculasCursor.getString(2));
-			}
+			AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
+			position = adapterContextMenuInfo.position;
+			menu.setHeaderTitle(JSONArrayDatosPeli.getJSONObject(position).getJSONObject("value").getString("Titulo"));
 
 		} catch (Exception e){
 			mostrarMsgToask("En context menu: "+e.getMessage());
@@ -116,6 +114,9 @@ public class MainActivity extends AppCompatActivity {
 		try {
 			Bundle parametrosProducts = new Bundle();
 			parametrosProducts.putString("accion", accion);
+			if(JSONArrayDatosPeli.length()>0){
+				parametrosProducts.putString("datos", JSONArrayDatosPeli.getJSONObject(position).toString() );
+			}
 
 			Intent agregarProductos = new Intent(getApplicationContext(), actNuevoProducto.class);
 			agregarProductos.putExtras(parametrosProducts);
@@ -172,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
 		try {
 			ConexionServer conexionServer = new ConexionServer();
 			String resp = conexionServer.execute(u.url_consulta, "GET").get();
-			mostrarMsgToask("resp: "+resp.toString());
+			//mostrarMsgToask("resp: "+resp.toString());
 			JSONObjectDatosPeli = new JSONObject(resp);
 			JSONArrayDatosPeli = JSONObjectDatosPeli.getJSONArray("rows");
 			mostrarDatosPeliculas();
@@ -184,6 +185,23 @@ public class MainActivity extends AppCompatActivity {
 			datosPeliculasCursor = miBD.administracionPeliculas("seleccionar", null);
 
 			if (datosPeliculasCursor.moveToFirst()){
+				JSONArrayDatosPeli = new JSONArray();
+				do {
+					JSONObjectDatosPeli = new JSONObject();
+					JSONObject jsonValueobject = new JSONObject();
+					JSONObjectDatosPeli.put("_id", datosPeliculasCursor.getString(0));
+					JSONObjectDatosPeli.put("_rev", datosPeliculasCursor.getString(0));
+					JSONObjectDatosPeli.put("Codigo", datosPeliculasCursor.getString(1));
+					JSONObjectDatosPeli.put("Titulo", datosPeliculasCursor.getString(2));
+					JSONObjectDatosPeli.put("Sinopsis", datosPeliculasCursor.getString(3));
+					JSONObjectDatosPeli.put("Duracion", datosPeliculasCursor.getString(4));
+					JSONObjectDatosPeli.put("Precio", datosPeliculasCursor.getString(5));
+					JSONObjectDatosPeli.put("URLFoto", datosPeliculasCursor.getString(6));
+					JSONObjectDatosPeli.put("URLTrailer", datosPeliculasCursor.getString(7));
+					jsonValueobject.put("value", JSONObjectDatosPeli);
+
+					JSONArrayDatosPeli.put(jsonValueobject);
+				} while (datosPeliculasCursor.moveToNext());
 				mostrarDatosPeliculas();
 			} else {
 				mostrarMsgToask("No hay datos que mostrar, por favor agregue nuevos...");
@@ -194,10 +212,10 @@ public class MainActivity extends AppCompatActivity {
 	//Obtener los datos de la BD, más no mostrarlos.
 	private void obteberDatosPeliculas() {
 		if (di.hayConexion()){
-			mostrarMsgToask("Hay internet, mostrando datos de la nube");
+			//mostrarMsgToask("Hay internet, mostrando datos de la nube");
 			obteberDatosPeliculasOnline();
 		} else {
-			//JSONArrayDatosProduct = new JSONArray();
+			JSONArrayDatosPeli = new JSONArray();
 			mostrarMsgToask("No hay internet, mostrando feed local");
 			ObteberDatosPeliculasOffline();
 		}
@@ -206,51 +224,35 @@ public class MainActivity extends AppCompatActivity {
 	//Mostrar datros de la BD
 	private void mostrarDatosPeliculas() {
 		try {
-			lstBuscar = findViewById(R.id.ltsBuscar);
-			peliculasArrayList.clear();
-			peliculasArrayListCopy.clear();
-			JSONObject jsonObject;
-			if (di.hayConexion()){
-				if (JSONArrayDatosPeli.length() > 0){
-					for (int i = 0; i < JSONArrayDatosPeli.length(); i++){
-						jsonObject = JSONArrayDatosPeli.getJSONObject(i).getJSONObject("value");
-						mispeliculas = new peliculas(
-								jsonObject.getString("_id"),
-								jsonObject.getString("_rev"),
-								jsonObject.getString("Codigo"),
-								jsonObject.getString("Titulo"),
-								jsonObject.getString("Sinopsis"),
-								jsonObject.getString("Duracion"),
-								jsonObject.getString("Precio"),
-								jsonObject.getString("URLFoto"),
-								jsonObject.getString("URLTrailer")
-						);
-						peliculasArrayList.add(mispeliculas);
-					}
-				} else {
-					mostrarMsgToask("No hay registros que mostrar...");
-					RegistrarPeliculas("nuevo");
-				}
-			}  else {
-				do {
+			if (JSONArrayDatosPeli.length() > 0){
+				lstBuscar = findViewById(R.id.ltsBuscar);
+				peliculasArrayList.clear();
+				peliculasArrayListCopy.clear();
+
+				JSONObject jsonObject;
+
+				for (int i = 0; i < JSONArrayDatosPeli.length(); i++){
+					jsonObject = JSONArrayDatosPeli.getJSONObject(i).getJSONObject("value");
 					mispeliculas = new peliculas(
-							datosPeliculasCursor.getString(0),//idproducto
-							datosPeliculasCursor.getString(1),//codigo
-							datosPeliculasCursor.getString(1),//codigo
-							datosPeliculasCursor.getString(2),//Titulo
-							datosPeliculasCursor.getString(3),//Sinopsis
-							datosPeliculasCursor.getString(4),//Durarion
-							datosPeliculasCursor.getString(5), //precio
-							datosPeliculasCursor.getString(6), //urldefoto
-							datosPeliculasCursor.getString(7)//urlTrailer
+							jsonObject.getString("_id"),
+							jsonObject.getString("_rev"),
+							jsonObject.getString("Codigo"),
+							jsonObject.getString("Titulo"),
+							jsonObject.getString("Sinopsis"),
+							jsonObject.getString("Duracion"),
+							jsonObject.getString("Precio"),
+							jsonObject.getString("URLFoto"),
+							jsonObject.getString("URLTrailer")
 					);
-					peliculasArrayListCopy.add(mispeliculas);
-				} while (datosPeliculasCursor.moveToNext());
+					peliculasArrayList.add(mispeliculas);
+				}
+				adaptadorImagenes adaptadorImagenes = new adaptadorImagenes(getApplicationContext(), peliculasArrayList);
+				lstBuscar.setAdapter(adaptadorImagenes);
+				registerForContextMenu(lstBuscar);
+				peliculasArrayListCopy.addAll(peliculasArrayList);
+			} else {
+				mostrarMsgToask("No hay registros para mostrar...");
 			}
-			adaptadorImagenes adaptadorImagenes = new adaptadorImagenes(getApplicationContext(), peliculasArrayList);
-			lstBuscar.setAdapter(adaptadorImagenes);
-			registerForContextMenu(lstBuscar);
-			peliculasArrayListCopy.addAll(peliculasArrayList);
 		} catch (Exception e){mostrarMsgToask("mostrar datos: "+e.getMessage());}
 	}
 

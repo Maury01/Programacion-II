@@ -31,6 +31,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class actNuevoProducto extends AppCompatActivity {
+    //Mauricio Enrique Vásquez Ramirez	USIS007620
+//Michelle Brisette Perez Caballero USIS006620
+//Elias Mauricio Parada Lozano		USIS030320
+//Lisseth Alexandra Gomez Venegas	USIS005620
 
     BD miBD;
     TextView TempVal, DireccionVideo;
@@ -91,9 +95,9 @@ public class actNuevoProducto extends AppCompatActivity {
                     datosPeli.put("_rev", rev);
                 }
                 datosPeli.put("Codigo",Codigo);
-                datosPeli.put("Descripcion", Titulo);
-                datosPeli.put("Marca", Sinopsis);
-                datosPeli.put("Presentacion", Duracion);
+                datosPeli.put("Titulo", Titulo);
+                datosPeli.put("Sinopsis", Sinopsis);
+                datosPeli.put("Duracion", Duracion);
                 datosPeli.put("Precio", Precio);
                 datosPeli.put("URLFoto", URL);
                 datosPeli.put("URLTrailer", URLTrailer);
@@ -111,7 +115,7 @@ public class actNuevoProducto extends AppCompatActivity {
                     datosPeli.put("URLTrailer",URLTrailer);
                 }
 
-                URL = "SDA";
+                URL = "/storage/emulated/0/Download";
                 URLTrailer = "asd";
                 String[] datos = {idPelicula, Codigo, Titulo, Sinopsis, Duracion, Precio, URL, URLTrailer};
 
@@ -147,7 +151,7 @@ public class actNuevoProducto extends AppCompatActivity {
                 TempVal.setText(datos.getString("Titulo"));
 
                 TempVal = findViewById(R.id.txtSinopsis);
-                TempVal.setText(datos.getString("Snopsis"));
+                TempVal.setText(datos.getString("Sinopsis"));
 
                 TempVal = findViewById(R.id.txtDuracion);
                 TempVal.setText(datos.getString("Duracion"));
