@@ -3,5 +3,4 @@
     <item android:id="@+id/mnxAgregar" android:title="Agregar">Agregar</item>
     <item android:id="@+id/mnxModificar" android:title="Modificar">Modificar</item>
     <item android:id="@+id/mnxEliminar" android:title="Eliminar">Eliminar</item>
-    <item android:id="@+id/mnxTrailer" android:title="Ver Trailer">Ver Trailer</item>
 </menu>

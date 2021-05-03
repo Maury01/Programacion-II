@@ -12,7 +12,7 @@ import android.widget.VideoView;
 //Lisseth Alexandra Gomez Venegas	USIS005620
 public class Reproductor extends AppCompatActivity {
     VideoView Video;
-    String URLTrailer = "/storage/emulated/0/Download/a.mp4";
+    String URLTrailer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

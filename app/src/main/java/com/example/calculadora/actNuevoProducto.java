@@ -45,7 +45,7 @@ public class actNuevoProducto extends AppCompatActivity {
     BD miBD;
     TextView TempVal, DireccionVideo, imagen;
     Intent TomarFotoIntent;
-    Button RegistrarPeli, ElegirTrailer, atras;
+    Button RegistrarPeli, ElegirTrailer, atras, Vertrailer;
     ImageView imgPelicula;
     VideoView vidPelicula;
     String URL, URLTrailer, idPelicula, rev, accion = "nuevo";
@@ -68,12 +68,16 @@ public class actNuevoProducto extends AppCompatActivity {
         DireccionVideo = (TextView) findViewById(R.id.lblURLVideo);
         vidPelicula = (VideoView) findViewById(R.id.vdoVideo);
         imagen = (TextView) findViewById(R.id.lblURLImagen);
+        Vertrailer = (Button) findViewById(R.id.VerTrailer);
 
         atras.setOnClickListener(v -> { Atras(); });
 
         imgPelicula.setOnClickListener(v -> { ElegirImagen();});
 
         ElegirTrailer.setOnClickListener(v -> {ElegirVideo();});
+
+        Vertrailer.setOnClickListener(v -> { VerTrailer(); });
+
 
 
         RegistrarPeli.setOnClickListener(v -> {
@@ -121,8 +125,6 @@ public class actNuevoProducto extends AppCompatActivity {
                     datosPeli.put("URLTrailer",URLTrailer);
                 }
 
-                URL = "/storage/emulated/0/DCIM/Camera/IMG_20210503_025140.jpg";
-                URLTrailer = "asd";
                 String[] datos = {idPelicula, Codigo, Titulo, Sinopsis, Duracion, Precio, URL, URLTrailer};
 
                 di = new DetectarInternet(getApplicationContext());
@@ -172,6 +174,7 @@ public class actNuevoProducto extends AppCompatActivity {
                 imgPelicula.setImageBitmap(bitmap);
 
                 URLTrailer = datos.getString("URLTrailer");
+                vidPelicula.setVideoURI(Uri.parse(URLTrailer));
                 DireccionVideo.setText(URLTrailer);
 
             }
@@ -246,6 +249,10 @@ public class actNuevoProducto extends AppCompatActivity {
 
     private void mostrarMsgToast(String msg){
         Toast.makeText(getApplicationContext(),msg, Toast.LENGTH_LONG).show();
+    }
+    public void VerTrailer(){
+        Intent reproducir = new Intent(getApplicationContext(), Reproductor.class);
+        startActivity(reproducir);
     }
 
     public static String getRealURL(final Context context, final Uri uri){

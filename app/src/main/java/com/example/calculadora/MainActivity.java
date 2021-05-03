@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 			RegistrarPeliculas("nuevo");
 		});
 		//try {
-
+			SincroniazrDatos();
 			obteberDatosPeliculas();
 
 			buscarPeliculas();
@@ -115,9 +115,6 @@ public class MainActivity extends AppCompatActivity {
 					break;
 				case R.id.mnxEliminar:
 					eliminarPelicula();
-					break;
-				case R.id.mnxTrailer:
-					VerTrailer();
 					break;
 			}
 		} catch (Exception ex) {
@@ -429,7 +426,7 @@ public class MainActivity extends AppCompatActivity {
 						datospelis.put("Duracion",datosPeliculasCursor.getString(4));
 						datospelis.put("Precio",datosPeliculasCursor.getString(5));
 						datospelis.put("URLFoto",datosPeliculasCursor.getString(6));
-						datospelis.put("URLTriler",datosPeliculasCursor.getString(7));
+						datospelis.put("URLTrailer",datosPeliculasCursor.getString(7));
 						EnviarDatosPelicula guardarpelis = new EnviarDatosPelicula(getApplicationContext());
 						String resp = guardarpelis.execute(datospelis.toString()).get();
 					} while (datosPeliculasCursor.moveToNext());

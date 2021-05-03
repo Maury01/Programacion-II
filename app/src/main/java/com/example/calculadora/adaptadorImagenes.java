@@ -64,7 +64,10 @@ public class adaptadorImagenes extends BaseAdapter {
 
             Bitmap imagenBitMap = BitmapFactory.decodeFile(misPeliculas.getURLFoto());
             imgViewView.setImageBitmap(imagenBitMap);
-        } catch (Exception e){}
+
+        } catch (Exception e){
+
+        }
         return itemView;
     }
 }
