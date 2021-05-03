@@ -1,15 +1,19 @@
 package com.example.calculadora;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,8 +25,10 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import org.json.JSONObject;
 
@@ -37,10 +43,11 @@ public class actNuevoProducto extends AppCompatActivity {
 //Lisseth Alexandra Gomez Venegas	USIS005620
 
     BD miBD;
-    TextView TempVal, DireccionVideo;
+    TextView TempVal, DireccionVideo, imagen;
     Intent TomarFotoIntent;
     Button RegistrarPeli, ElegirTrailer, atras;
     ImageView imgPelicula;
+    VideoView vidPelicula;
     String URL, URLTrailer, idPelicula, rev, accion = "nuevo";
     utilidades miUrl;
     DetectarInternet di;
@@ -58,17 +65,16 @@ public class actNuevoProducto extends AppCompatActivity {
         atras = (Button) findViewById(R.id.btnRegresar);
         RegistrarPeli = (Button) findViewById(R.id.btnRegistrar);
         ElegirTrailer = (Button) findViewById(R.id.btnVideo);
-        DireccionVideo = (TextView) findViewById(R.id.lblVideo);
+        DireccionVideo = (TextView) findViewById(R.id.lblURLVideo);
+        vidPelicula = (VideoView) findViewById(R.id.vdoVideo);
+        imagen = (TextView) findViewById(R.id.lblURLImagen);
 
-        atras.setOnClickListener(v -> {
-            Atras();
-        });
+        atras.setOnClickListener(v -> { Atras(); });
 
+        imgPelicula.setOnClickListener(v -> { ElegirImagen();});
 
+        ElegirTrailer.setOnClickListener(v -> {ElegirVideo();});
 
-        imgPelicula.setOnClickListener(v -> {
-            ElegirDeGaleria();
-        });
 
         RegistrarPeli.setOnClickListener(v -> {
             try {
@@ -105,17 +111,17 @@ public class actNuevoProducto extends AppCompatActivity {
                 if (URL != ""){
                     datosPeli.put("URLFoto",URL);
                 }else {
-                    URL = "404nofound";
+                    URL = "Empty";
                     datosPeli.put("URLFoto",URL);
                 }
                 if (URLTrailer != ""){
                     datosPeli.put("URLTrailer",URLTrailer);
                 }else {
-                    URLTrailer = "404nofound";
+                    URLTrailer = "Empty";
                     datosPeli.put("URLTrailer",URLTrailer);
                 }
 
-                URL = "/storage/emulated/0/Download";
+                URL = "/storage/emulated/0/DCIM/Camera/IMG_20210503_025140.jpg";
                 URLTrailer = "asd";
                 String[] datos = {idPelicula, Codigo, Titulo, Sinopsis, Duracion, Precio, URL, URLTrailer};
 
@@ -132,6 +138,8 @@ public class actNuevoProducto extends AppCompatActivity {
 
         });
         mostrarDatosPeliculas();
+        Permisos();
+        Controles();
     }
 
     public void mostrarDatosPeliculas(){
@@ -170,34 +178,56 @@ public class actNuevoProducto extends AppCompatActivity {
         } catch (Exception e){mostrarMsgToast("act mostrar datos"+e.getMessage());}
     }
 
+    private void Permisos(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (ActivityCompat.checkSelfPermission(actNuevoProducto.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            } else {
+                ActivityCompat.requestPermissions(actNuevoProducto.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},RPQ);
+            }
+        } else {
+
+        }
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-            if (requestCode == 1 && resultCode == RESULT_OK){
-                Bitmap imagenBitmap = BitmapFactory.decodeFile(URL);
-                imgPelicula.setImageBitmap(imagenBitmap);
-                mostrarMsgToast(URL.toString());
+            if (resultCode == Activity.RESULT_OK && data != null){
+                if (requestCode == RIG){
+                    Uri foto =  data.getData();
+                    imgPelicula.setImageURI(foto);
+
+                    URL =  getRealURL(this, foto);
+                    imagen.setText("imagen: " + URL);
+                } else if (requestCode == RVD){
+                    Uri video = data.getData();
+                    vidPelicula.setVideoURI(video);
+                    URLTrailer = getRealURL(this, video);
+                    DireccionVideo.setText("Video: " + URLTrailer);
+
+                }
             }
-            if(requestCode == RIG && resultCode == Activity.RESULT_OK && data != null){
-                Uri path = data.getData();
-                imgPelicula.setImageURI(path);
-                URL = getRealUrl(this, path);
-                mostrarMsgToast(URL.toString());
-            }
+
         } catch (Exception e){mostrarMsgToast("Act.Result: "+e.getMessage());}
     }
 
 
 
-    private void ElegirDeGaleria(){
+    private void ElegirImagen(){
         Intent elegir =  new Intent(Intent.ACTION_GET_CONTENT );
         elegir.setType("image/*");
         startActivityForResult(elegir, RIG);
     }
 
-    private void VerTrailer(){
-
+    private void ElegirVideo(){
+        Intent elegir = new Intent(Intent.ACTION_GET_CONTENT);
+        elegir.setType("video/*");
+        startActivityForResult(elegir, RVD);
+    }
+    private void Controles(){
+        MediaController mediaController = new MediaController(this);
+        vidPelicula.setMediaController(mediaController);
+        mediaController.setAnchorView(vidPelicula);
     }
 
     public void Atras (){
@@ -205,73 +235,66 @@ public class actNuevoProducto extends AppCompatActivity {
         startActivity(Regresar);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+        if (requestCode == RPQ){
+            if (permissions.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            } else {mostrarMsgToast("Conseda los permisos para proseguir");}
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
     private void mostrarMsgToast(String msg){
         Toast.makeText(getApplicationContext(),msg, Toast.LENGTH_LONG).show();
     }
 
-    public static String getRealUrl(final Context context, final Uri uri) {
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-            if (isExternalStorageDocument(uri)) {
+    public static String getRealURL(final Context context, final Uri uri){
+        final boolean isPie = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P;
+        if (isPie && DocumentsContract.isDocumentUri(context, uri)){
+            if (isExternalStorageDocument(uri)){
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
                 final String type = split[0];
-                if ("primary".equalsIgnoreCase(type)) {
-                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                if ("primary".equalsIgnoreCase(type)){
+                    return Environment.getExternalStorageDirectory() +  "/" + split[1];
                 }
-            }
-            else if (isDownloadsDocument(uri)) {
-                final String id = DocumentsContract.getDocumentId(uri);
+            } else if (isDownloadsDocument(uri)){
+                final String Id = DocumentsContract.getDocumentId(uri);
                 final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-                return getDataColumn(context, contentUri, null, null);
-            }
-            else if (isMediaDocument(uri)) {
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(Id));
+                return getDataColum(context, contentUri, null, null);
+            } else if (isMediaDocument(uri)){
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
                 final String type = split[0];
-
                 Uri contentUri = null;
-                if ("image".equals(type)) {
+
+                if ("image".equals(type)){
                     contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                } else if ("video".equals(type)) {
+                } else if ("video".equals(type)){
                     contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-                } else if ("audio".equals(type)) {
+                } else if ("audio".equals(type)){
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
-                        split[1]
-                };
+                final String[] selectionArgs = new String[] { split[1] };
 
-                return getDataColumn(context, contentUri, selection, selectionArgs);
+                return getDataColum(context, contentUri, selection, selectionArgs);
             }
         }
-        else if ("content".equalsIgnoreCase(uri.getScheme())) {
-            return getDataColumn(context, uri, null, null);
-        }
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
-
         return null;
     }
-    public static String getDataColumn(Context context, Uri uri, String selection,
-                                       String[] selectionArgs) {
 
+    public static String getDataColum(Context context, Uri uri, String selection, String[] selectionArgs){
         Cursor cursor = null;
-        final String column = "_data";
-        final String[] projection = {
-                column
-        };
-
+        final String colum = "_data";
+        final String[] projection = { colum };
         try {
-            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
-                    null);
-            if (cursor != null && cursor.moveToFirst()) {
-                final int column_index = cursor.getColumnIndexOrThrow(column);
-                return cursor.getString(column_index);
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
+            if (cursor != null && cursor.moveToFirst()){
+                final int colum_index = cursor.getColumnIndexOrThrow(colum);
+                return cursor.getString(colum_index);
             }
         } finally {
             if (cursor != null)
@@ -279,12 +302,17 @@ public class actNuevoProducto extends AppCompatActivity {
         }
         return null;
     }
+
+
     public static boolean isExternalStorageDocument(Uri uri) {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
+
+
     public static boolean isDownloadsDocument(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
+
 
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());

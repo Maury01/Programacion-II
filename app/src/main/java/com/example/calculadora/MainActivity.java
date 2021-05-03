@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.database.Cursor;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 	DetectarInternet di;
 	int position = 0;
 	String URLTrailer;
+	Button f;
 
 
 	@Override
@@ -66,9 +68,15 @@ public class MainActivity extends AppCompatActivity {
 			RegistrarPeliculas("nuevo");
 		});
 		//try {
+
 			obteberDatosPeliculas();
+
 			buscarPeliculas();
 		//} catch (Exception e){mostrarMsgToask("On create main: " + e.getMessage());}
+		f = (Button) findViewById(R.id.f);
+		f.setOnClickListener(v -> {
+			VerTrailer();
+		});
 	}
 
 	@Override //Se contruyé el menú.
@@ -77,9 +85,17 @@ public class MainActivity extends AppCompatActivity {
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.menu_productos, menu);
 		try {
-			AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
-			position = adapterContextMenuInfo.position;
-			menu.setHeaderTitle(JSONArrayDatosPeli.getJSONObject(position).getJSONObject("value").getString("Titulo"));
+			if (di.hayConexion()){
+				AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
+				datosPeliculasCursor.moveToPosition(adapterContextMenuInfo.position);
+				position = adapterContextMenuInfo.position;
+				menu.setHeaderTitle(JSONArrayDatosPeli.getJSONObject(position).getJSONObject("value").getString("Titulo"));
+			} else {
+				AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
+				datosPeliculasCursor.moveToPosition(adapterContextMenuInfo.position);
+				menu.setHeaderTitle(datosPeliculasCursor.getString(2));
+			}
+
 
 		} catch (Exception e){
 			mostrarMsgToask("En context menu: "+e.getMessage());
@@ -212,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
 	//Obtener los datos de la BD, más no mostrarlos.
 	private void obteberDatosPeliculas() {
 		if (di.hayConexion()){
-			//mostrarMsgToask("Hay internet, mostrando datos de la nube");
+			mostrarMsgToask("Hay internet, mostrando datos de la nube");
 			obteberDatosPeliculasOnline();
 		} else {
 			JSONArrayDatosPeli = new JSONArray();
@@ -252,8 +268,11 @@ public class MainActivity extends AppCompatActivity {
 				peliculasArrayListCopy.addAll(peliculasArrayList);
 			} else {
 				mostrarMsgToask("No hay registros para mostrar...");
+
 			}
-		} catch (Exception e){mostrarMsgToask("mostrar datos: "+e.getMessage());}
+		} catch (Exception e){
+			mostrarMsgToask("mostrar datos: "+e.getMessage());
+		}
 	}
 
 	private void buscarPeliculas(){
@@ -385,6 +404,40 @@ public class MainActivity extends AppCompatActivity {
 	public void VerTrailer(){
 		Intent reproducir= new Intent(getApplicationContext(), Reproductor.class);
 		startActivity(reproducir);
+	}
+	public void SincroniazrDatos(){
+		if (di.hayConexion()){
+			obteberDatosPeliculasOnline();
+			peliculasArrayList.clear();
+			peliculasArrayListCopy.clear();
+			try {
+				for (int i=0; i < JSONArrayDatosPeli.length(); i++){
+					JSONObjectDatosPeli = JSONArrayDatosPeli.getJSONObject(i).getJSONObject("value");
+					ConexionServer objEliminar = new ConexionServer();
+					String resp = objEliminar.execute(u.url_mto +
+							JSONObjectDatosPeli.getString("_id") + "?rev=" +
+							JSONObjectDatosPeli.getString("_rev"), "DELETE").get();
+				}
+				miBD = new BD(getApplicationContext(), "", null, 1);
+				datosPeliculasCursor = miBD.administracionPeliculas("seleccionar", null);
+				if (datosPeliculasCursor.moveToFirst()){
+					JSONObject datospelis = new JSONObject();
+					do {
+						datospelis.put("Codigo",datosPeliculasCursor.getString(1));
+						datospelis.put("Titulo",datosPeliculasCursor.getString(2));
+						datospelis.put("Sinopsis",datosPeliculasCursor.getString(3));
+						datospelis.put("Duracion",datosPeliculasCursor.getString(4));
+						datospelis.put("Precio",datosPeliculasCursor.getString(5));
+						datospelis.put("URLFoto",datosPeliculasCursor.getString(6));
+						datospelis.put("URLTriler",datosPeliculasCursor.getString(7));
+						EnviarDatosPelicula guardarpelis = new EnviarDatosPelicula(getApplicationContext());
+						String resp = guardarpelis.execute(datospelis.toString()).get();
+					} while (datosPeliculasCursor.moveToNext());
+					mostrarMsgToask("Datos sincronizados");
+				}
+				else {mostrarMsgToask("no hay datos que sincronizar...");}
+			} catch (Exception e){mostrarMsgToask("Sync datos: "+e.getMessage());}
+		}
 	}
 }
 
