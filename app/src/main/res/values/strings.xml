@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Calculadora</string>
 
+    <string name="btnAtras">Atras</string>
+    <string name="NombreApp">PicShare</string>
+
+    <string name="TituloLogin">Iniciar Sesión</string>
+    <string name="txtCorreoLogin">Correo</string>
+    <string name="txtpassLogin">Contraseña</string>
+    <string name="txtRegistraseLogin">Registrarse</string>
+
 </resources>
