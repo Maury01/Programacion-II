@@ -1,16 +1,4 @@
 <resources>
     <string name="app_name">Calculadora</string>
 
-    <string-array name="Operaciones">
-        <item>Suma</item>
-        <item>Resta</item>
-        <item>Multiplicacion</item>
-        <item>Division</item>
-        <item>Factorial</item>
-        <item>Porcentaje</item>
-        <item>Exponenciacion</item>
-        <item>Raiz</item>
-        <item>Mod</item>
-        <item>Numero mayor</item>
-    </string-array>
 </resources>
