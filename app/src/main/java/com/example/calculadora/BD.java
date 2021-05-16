@@ -49,7 +49,10 @@ public class BD extends SQLiteOpenHelper {
                     sqLiteDatabaseW.execSQL("INSERT INTO tblUsuarios(Nombre, Correo, Usuario, Password) VALUES('"+ datosUser[1] +"','"+ datosUser[2] +"','"+ datosUser[3] +"','"+ datosUser[4] +"')");
                     break;
                 case "seleccionar":
-                    datosUsuarios = sqLiteDatabaseR.rawQuery("SELECT * FROM tblUsuarios ORDER BY Usuario", null);
+                    datosUsuarios = sqLiteDatabaseR.rawQuery("SELECT Usuario, Correo, Password FROM tblUsuarios WHERE Correo='"+ datosUser[1] +"', Password='"+ datosUser[2] +"'", null);
+                    break;
+                case "seleccionarUser":
+                    datosUsuarios = sqLiteDatabaseR.rawQuery("SELECT Usuario, Correo FROM tblUsuarios WHERE Usuario='" + datosUser[3] + "', Correo='"+ datosUser[2] +"'", null);
                     break;
                 case "modificar":
                     sqLiteDatabaseW.execSQL("UPDATE tblUsuarios SET Nombre='" + datosUser[1] + "', Correo='" + datosUser[2] + "', Usuario='" + datosUser[3] + "', Password= '" + datosUser[4] + "' WHERE idUsuario='" + datosUser[0] + "'");

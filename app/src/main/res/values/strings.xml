@@ -9,4 +9,10 @@
     <string name="txtpassLogin">Contraseña</string>
     <string name="txtRegistraseLogin">Registrarse</string>
 
+    <string name="lblRegistraseReg">Registro</string>
+    <string name="txtNombreReg">Nombre</string>
+    <string name="txtCinfirmPassReg">Repita la contraseña</string>
+    <string name="txtUserPassReg">Nombre de Usuario</string>
+    <string name="txtUserinvalidoReg">Nombre de ususario no disponible</string>
+
 </resources>
