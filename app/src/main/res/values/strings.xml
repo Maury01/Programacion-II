@@ -15,4 +15,7 @@
     <string name="txtUserPassReg">Nombre de Usuario</string>
     <string name="txtUserinvalidoReg">Nombre de ususario no disponible</string>
 
+    <string name="UsuarioMain">Iniciar sesion</string>
+    <string name="txtbuscar">Buscar Imagen</string>
+
 </resources>

@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 public class Login extends AppCompatActivity {
     EditText Correo, Password;
-    String accion = "seleccionar", CorreoS, PasswordS, idUsuario = "", Usuario = "";
+    String accion = "seleccionar", CorreoS, PasswordS, idUsuario = "", Usuario = "-";
     Button Atras, IniciarSesion, Registrarse;
     Cursor datosBDCursor;
     DetectarInternet di;
@@ -49,9 +49,9 @@ public class Login extends AppCompatActivity {
     }
 
     public void iniciarsesion(){
-        if (di.hayConexion()){
+        /*if (di.hayConexion()){
             Mensaje("Hay conexion iniciar sesion Online");
-        } else {Mensaje("Sin Conexion iniciar sesion con la feed offline");}
+        } else {Mensaje("Sin Conexion iniciar sesion con la feed offline");}*/
 
         try {
             miBD = new BD(getApplicationContext(), "", null, 1);
@@ -61,7 +61,7 @@ public class Login extends AppCompatActivity {
 
             if (CorreoS != "" && PasswordS != ""){
               String[] datos = {idUsuario, CorreoS, PasswordS, Usuario};
-              datosBDCursor= miBD.AministrarUsuarios(accion, datos);
+              datosBDCursor= miBD.AministrarUsuarios("seleccionar", datos);
               if (datosBDCursor.moveToFirst()){
                   datosBDCursor.getString(3); //Usuario
                   Usuario = datosBDCursor.toString();
@@ -75,6 +75,7 @@ public class Login extends AppCompatActivity {
 
     public void PaginaPrincipal(){
         Intent PagPrincipal = new Intent(this, MainActivity.class);
+        PagPrincipal.putExtra("User", Usuario);
         startActivity(PagPrincipal);
     }
 

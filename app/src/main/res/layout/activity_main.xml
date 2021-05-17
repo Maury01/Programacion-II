@@ -1,4 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-</RelativeLayout>
+  <LinearLayout
+      android:id="@+id/linearLayout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_marginTop="20dp">
+
+    <TextView
+        android:id="@+id/txtNombreAppMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/NombreApp"
+        android:textColor="#1D3557"
+        android:textSize="24dp"
+        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteY="81dp"
+        android:layout_marginLeft="150sp"/>
+
+    <RelativeLayout
+        android:id="@+id/line1"
+        android:layout_width="55dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/stylo_lineas"
+        android:rotation="90" />
+
+    <Button
+        android:id="@+id/btnUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#1D3557"
+        android:text="@string/UsuarioMain"
+        android:textSize="12dp" />
+  </LinearLayout>
+
+  <RelativeLayout
+      android:id="@+id/line2"
+      android:layout_width="match_parent"
+      android:layout_height="5sp"
+      android:background="@drawable/stylo_lineas"
+      app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+      tools:layout_editor_absoluteX="0dp" />
+
+  <EditText
+      android:id="@+id/txtBuscarMain"
+      android:layout_width="387dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:layout_marginEnd="12dp"
+      android:backgroundTint="#A8DADC"
+      android:hint="@string/txtbuscar"
+      android:textColorHint="#A8DADC"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/line2" />
+
+  <RelativeLayout
+      android:id="@+id/lytGridView"
+      android:layout_width="match_parent"
+      android:layout_height="560dp"
+      android:layout_marginTop="25dp"
+      app:layout_constraintTop_toBottomOf="@+id/txtBuscarMain"
+      tools:layout_editor_absoluteX="-5dp">
+
+    <GridView
+        android:id="@+id/grvImagenes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="177dp"
+        tools:layout_editor_absoluteY="410dp" />
+  </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

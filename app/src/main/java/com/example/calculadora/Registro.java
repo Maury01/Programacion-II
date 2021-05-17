@@ -48,9 +48,9 @@ public class Registro extends AppCompatActivity {
     public void RegistrarUsuario(){
         try {
             mIBD = new BD(getApplicationContext(),"", null, 1);
-            if (di.hayConexion()){
+            /*if (di.hayConexion()){
                 Mensaje("Hay conexion Registro online");
-            } else {Mensaje("Sin Conexion a Registro offline");}
+            } else {Mensaje("Sin Conexion a Registro offline");}*/
 
             NombreS = Nombre.getText().toString();
             UsuarioS = Usuario.getText().toString();
@@ -59,16 +59,16 @@ public class Registro extends AppCompatActivity {
             ConfirmPasswordS = ConfirmPassword.getText().toString();
 
             if (NombreS != "" && UsuarioS != "" && CorreoS != "" && PasswordS != "" && ConfirmPasswordS != ""){
-                if (PasswordS == ConfirmPasswordS){
+                if (PasswordS.equals(ConfirmPasswordS) ){
                     String[] datos = {idUsuario, NombreS, CorreoS, UsuarioS, PasswordS};
-                    datosBDcursor = mIBD.AministrarUsuarios("seleccionarUser", datos);
+                    //datosBDcursor = mIBD.AministrarUsuarios("seleccionarUser", datos);
 
-                    if (datosBDcursor.moveToFirst()){
+                    /*if (datosBDcursor.moveToFirst()){
                         UserNOTValid.setCursorVisible(true);
-                    } else {
+                    } else {*/
                         mIBD.AministrarUsuarios(accion, datos);
                         Mensaje("Registro Exitoso");
-                    }
+                    //}
                 } else { Mensaje("Las contraseñas no es igual a la confirmacion");}
             } else {Mensaje("Por favor llene todos los campos para continuar.");}
 
