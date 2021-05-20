@@ -16,9 +16,9 @@ import androidx.annotation.Nullable;
 public class BD extends SQLiteOpenHelper {
     public Context micontext;
     static String NombreBD = "db_PicShared";
-    static String tblUsuarios = "CREATE TABLE tblUsuarios(idUsuario integer primary key autoincrement, Nombre text, Correo text, Usuario text, Password text)";
+    static String tblUsuarios = "CREATE TABLE tblUsuarios(idUsuario integer primary key autoincrement, Nombre text, Correo text, Usuario text, Pass text)";
     static String tblPublicaciones = "CREATE TABLE tblPublicaciones(idPublicacion integer primary key autoincrement, Usuario text, Descripcion text, Categoria text, Foto text)";
-    static String tblComenatarios = "CREATE TABLE tblComentarios()";
+    //static String tblComenatarios = "CREATE TABLE tblComentarios()";
 
     public BD(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, NombreBD, factory, version);
@@ -46,10 +46,10 @@ public class BD extends SQLiteOpenHelper {
 
             switch (accion){
                 case "nuevo":
-                    sqLiteDatabaseW.execSQL("INSERT INTO tblUsuarios(Nombre, Correo, Usuario, Password) VALUES ('"+ datosUser[1] +"','"+ datosUser[2] +"','"+ datosUser[3] +"','"+ datosUser[4] +"')");
+                    sqLiteDatabaseW.execSQL("INSERT INTO tblUsuarios(Nombre, Correo, Usuario, Pass) VALUES ('"+ datosUser[1] +"','"+ datosUser[2] +"','"+ datosUser[3] +"','"+ datosUser[4] +"')");
                     break;
                 case "seleccionar":
-                    datosUsuarios = sqLiteDatabaseR.rawQuery("SELECT Usuario FROM tblUsuarios WHERE Correo='"+ datosUser[1] +"', Password='"+ datosUser[2] +"'", null);
+                    datosUsuarios = sqLiteDatabaseR.rawQuery("SELECT * Usuario FROM tblUsuarios WHERE Correo='"+ datosUser[1] +"', Pass='"+ datosUser[2] +"' ORDER BY Correo", null);
                     break;
                 case "seleccionarUser":
                     datosUsuarios = sqLiteDatabaseR.rawQuery("SELECT Usuario, Correo FROM tblUsuarios WHERE Usuario='" + datosUser[3] + "', Correo='"+ datosUser[2] +"'", null);
@@ -64,8 +64,9 @@ public class BD extends SQLiteOpenHelper {
             return datosUsuarios;
         } catch (Exception e){
             Toast.makeText(micontext, "Error en Bd admin User: "+ e.getMessage(), Toast.LENGTH_LONG).show();
+            return null;
         }
-        return datosUsuarios;
+
     }
 
     public Cursor AministrarPublicaciones(String accion, String[] datosPost){

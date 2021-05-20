@@ -17,5 +17,10 @@
 
     <string name="UsuarioMain">Iniciar sesion</string>
     <string name="txtbuscar">Buscar Imagen</string>
+    
+    <string name="Usuarioname">Usuario</string>
+    <string name="btnPerfil">Editar Perfil</string>
+    <string name="btncerrarsesion">Cerrar Sesión</string>
+    <string name="mispublicaiones">Mis publicaiones</string>
 
 </resources>

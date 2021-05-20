@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 public class Login extends AppCompatActivity {
     EditText Correo, Password;
-    String accion = "seleccionar", CorreoS, PasswordS, idUsuario = "", Usuario = "-";
+    String accion = "seleccionar", CorreoS, PasswordS, idUsuario = "1", Usuario = "-";
     Button Atras, IniciarSesion, Registrarse;
     Cursor datosBDCursor;
     DetectarInternet di;
@@ -60,9 +60,9 @@ public class Login extends AppCompatActivity {
             PasswordS = Password.getText().toString();
 
             if (CorreoS != "" && PasswordS != ""){
-              String[] datos = {idUsuario, CorreoS, PasswordS, Usuario};
+              String[] datos = {idUsuario, CorreoS, PasswordS, Usuario, ""};
               datosBDCursor= miBD.AministrarUsuarios("seleccionar", datos);
-              if (datosBDCursor.moveToFirst()){
+              if (datosBDCursor.moveToFirst() && datosBDCursor != null){
                   datosBDCursor.getString(3); //Usuario
                   Usuario = datosBDCursor.toString();
                   Mensaje("Bienvenido " + Usuario);

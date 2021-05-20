@@ -70,12 +70,21 @@
       app:layout_constraintTop_toBottomOf="@+id/txtBuscarMain"
       tools:layout_editor_absoluteX="-5dp">
 
-    <GridView
-        android:id="@+id/grvImagenes"
+    <ScrollView
+        android:id="@+id/sclImagenes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="177dp"
-        tools:layout_editor_absoluteY="410dp" />
+        android:layout_height="wrap_content">
+
+      <GridView
+          android:id="@+id/grvImagenes"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:numColumns="2"
+          tools:layout_editor_absoluteX="177dp"
+          tools:layout_editor_absoluteY="410dp" />
+    </ScrollView>
+
+
   </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
