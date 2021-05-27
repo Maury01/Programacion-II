@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 public class Registro extends AppCompatActivity {
     EditText Nombre, Usuario, Correo, Password, ConfirmPassword;
@@ -19,6 +22,7 @@ public class Registro extends AppCompatActivity {
     BD mIBD;
     DetectarInternet di;
     Cursor datosBDcursor;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,8 @@ public class Registro extends AppCompatActivity {
 
         //Eventos
         Registrarse.setOnClickListener(v -> {
-            RegistrarUsuario();
+            RegistrarUsuarioLocal();
+            RegistrarUsuarioNube();
         });
 
         Atras.setOnClickListener(v -> {
@@ -45,7 +50,7 @@ public class Registro extends AppCompatActivity {
         });
     }
 
-    public void RegistrarUsuario(){
+    public void RegistrarUsuarioLocal(){
         try {
             mIBD = new BD(getApplicationContext(),"", null, 1);
             /*if (di.hayConexion()){
@@ -59,7 +64,7 @@ public class Registro extends AppCompatActivity {
             ConfirmPasswordS = ConfirmPassword.getText().toString();
 
             if (NombreS != "" && UsuarioS != "" && CorreoS != "" && PasswordS != "" && ConfirmPasswordS != ""){
-                if (PasswordS.equals(ConfirmPasswordS) ){
+                if (PasswordS.equals(ConfirmPasswordS)){
                     String[] datos = {idUsuario, NombreS, CorreoS, UsuarioS, PasswordS};
                     //datosBDcursor = mIBD.AministrarUsuarios("seleccionarUser", datos);
 
@@ -73,6 +78,16 @@ public class Registro extends AppCompatActivity {
             } else {Mensaje("Por favor llene todos los campos para continuar.");}
 
         } catch (Exception e){Mensaje("Resgistro User: " + e.getMessage());}
+    }
+
+    public void RegistrarUsuarioNube(){
+        try {
+            if (NombreS != "" && UsuarioS != "" && CorreoS != "" && PasswordS != "" && ConfirmPasswordS != ""){
+                if (PasswordS.equals(ConfirmPasswordS)){
+                    databaseReference = FirebaseDatabase.getInstance().getReference("Usuarios");
+                } else { Mensaje("Las contraseñas no es igual a la confirmacion");}
+            } else {Mensaje("Por favor llene todos los campos para continuar.");}
+        } catch (Exception e){Mensaje("Registro nube: " + e.getMessage());}
     }
 
     public void RegresarLogin(){

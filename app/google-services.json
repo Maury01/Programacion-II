@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "223428435503",
+    "firebase_url": "https://picshared-a8ffb-default-rtdb.firebaseio.com",
+    "project_id": "picshared-a8ffb",
+    "storage_bucket": "picshared-a8ffb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223428435503:android:0d6621cd043b569306f0da",
+        "android_client_info": {
+          "package_name": "com.example.calculadora"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223428435503-80hm9e2hlsdbm7cb6ddgdop84brdf5mn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPVSlP0Sl3mB22PBN4nyG4EOHBfnmm74o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "223428435503-80hm9e2hlsdbm7cb6ddgdop84brdf5mn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
