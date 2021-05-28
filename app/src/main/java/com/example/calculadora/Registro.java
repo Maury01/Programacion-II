@@ -12,11 +12,12 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 public class Registro extends AppCompatActivity {
     EditText Nombre, Usuario, Correo, Password, ConfirmPassword;
-    String NombreS, UsuarioS, CorreoS, PasswordS, ConfirmPasswordS, idUsuario, accion = "nuevo";
+    String NombreS, UsuarioS, CorreoS, PasswordS, ConfirmPasswordS, idUsuario, accion = "nuevo", mitoken;
     TextView UserNOTValid;
     Button Atras, Registrarse;
     BD mIBD;
@@ -42,12 +43,17 @@ public class Registro extends AppCompatActivity {
         //Eventos
         Registrarse.setOnClickListener(v -> {
             RegistrarUsuarioLocal();
-            RegistrarUsuarioNube();
         });
 
         Atras.setOnClickListener(v -> {
             RegresarLogin();
         });
+
+        //Propiedades aparte
+        try {
+            ObtenerToken();
+        } catch (Exception e){Mensaje("Propied. aparte: " + e.getMessage());}
+
     }
 
     public void RegistrarUsuarioLocal(){
@@ -73,6 +79,7 @@ public class Registro extends AppCompatActivity {
                     } else {*/
                         mIBD.AministrarUsuarios(accion, datos);
                         Mensaje("Registro Exitoso");
+                        RegistrarUsuarioNube();
                     //}
                 } else { Mensaje("Las contraseñas no es igual a la confirmacion");}
             } else {Mensaje("Por favor llene todos los campos para continuar.");}
@@ -85,9 +92,35 @@ public class Registro extends AppCompatActivity {
             if (NombreS != "" && UsuarioS != "" && CorreoS != "" && PasswordS != "" && ConfirmPasswordS != ""){
                 if (PasswordS.equals(ConfirmPasswordS)){
                     databaseReference = FirebaseDatabase.getInstance().getReference("Usuarios");
+                    NombreS = Nombre.getText().toString();
+                    UsuarioS = Usuario.getText().toString();
+                    CorreoS = Correo.getText().toString();
+                    PasswordS = Password.getText().toString();
+                    String key = databaseReference.push().getKey();
+                    if (mitoken == "" || key == null){
+                        ObtenerToken();
+                    }
+                    if (mitoken != "" || key != null){
+                        usuarios user = new usuarios(NombreS, UsuarioS, CorreoS, PasswordS, mitoken);
+                        if (key != null){
+                            databaseReference.child(key).setValue(user).addOnSuccessListener(aVoid -> {
+                                Mensaje("Usuario Registrado en la nube");
+                            });
+                        } else {Mensaje("No se inserto el usuario en la nube");}
+                    } else {Mensaje("No se pudo obtener el identificador de su telefono");}
+                    Mensaje(mitoken);
                 } else { Mensaje("Las contraseñas no es igual a la confirmacion");}
             } else {Mensaje("Por favor llene todos los campos para continuar.");}
         } catch (Exception e){Mensaje("Registro nube: " + e.getMessage());}
+    }
+
+    public void ObtenerToken(){
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()){
+                return;
+            }
+            mitoken = task.getResult();
+        });
     }
 
     public void RegresarLogin(){
