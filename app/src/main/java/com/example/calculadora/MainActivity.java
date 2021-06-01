@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
 		Buscar = (EditText) findViewById(R.id.txtBuscarMain);
 		di = new DetectarInternet(getApplicationContext());
 
+
+
 		BotonUsuario();
 
 		IniciarSesion.setOnClickListener(v -> {
@@ -79,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
 				Mensaje("Inicie Sesion para Interacturar");
 			} else if (Usuario != "-" || Usuario != null){
 				IniciarSesion.setText("Mi cuenta");
+				Usuario = getIntent().getStringExtra("User");
+				Mensaje("Bienvenido " + Usuario);
 			}
 			Usuario = getIntent().getStringExtra("User");
 		} catch (Exception e){ Mensaje("Error Boton User: " + e.getMessage());}

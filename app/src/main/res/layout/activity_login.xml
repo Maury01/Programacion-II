@@ -59,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/lytTitulos">
 
         <EditText
-            android:id="@+id/txtCorreoLogin"
+            android:id="@+id/txtUsurioLogin"
             android:layout_width="343dp"
             android:layout_height="52dp"
             android:hint="@string/txtCorreoLogin"

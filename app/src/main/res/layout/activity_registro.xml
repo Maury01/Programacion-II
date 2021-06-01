@@ -87,7 +87,7 @@
                 android:layout_height="52dp"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/stylo_bordes_editext"
-                android:hint="@string/txtCorreoLogin"
+                android:hint="@string/txtCorreoReg"
                 android:textColor="#1D3557"
                 android:textColorHint="#1D3557"
                 android:textSize="15dp" />

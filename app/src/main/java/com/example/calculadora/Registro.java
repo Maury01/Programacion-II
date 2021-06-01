@@ -1,5 +1,6 @@
 package com.example.calculadora;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,8 +11,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 
@@ -90,7 +95,7 @@ public class Registro extends AppCompatActivity {
     public void RegistrarUsuarioNube(){
         try {
             if (NombreS != "" && UsuarioS != "" && CorreoS != "" && PasswordS != "" && ConfirmPasswordS != ""){
-                if (PasswordS.equals(ConfirmPasswordS)){
+
                     databaseReference = FirebaseDatabase.getInstance().getReference("Usuarios");
                     NombreS = Nombre.getText().toString();
                     UsuarioS = Usuario.getText().toString();
@@ -103,13 +108,12 @@ public class Registro extends AppCompatActivity {
                     if (mitoken != "" || key != null){
                         usuarios user = new usuarios(NombreS, UsuarioS, CorreoS, PasswordS, mitoken);
                         if (key != null){
-                            databaseReference.child(key).setValue(user).addOnSuccessListener(aVoid -> {
+                            databaseReference.child(UsuarioS).setValue(user).addOnSuccessListener(aVoid -> {
                                 Mensaje("Usuario Registrado en la nube");
                             });
                         } else {Mensaje("No se inserto el usuario en la nube");}
                     } else {Mensaje("No se pudo obtener el identificador de su telefono");}
                     Mensaje(mitoken);
-                } else { Mensaje("Las contraseñas no es igual a la confirmacion");}
             } else {Mensaje("Por favor llene todos los campos para continuar.");}
         } catch (Exception e){Mensaje("Registro nube: " + e.getMessage());}
     }

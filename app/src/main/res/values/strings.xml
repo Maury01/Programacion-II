@@ -5,7 +5,8 @@
     <string name="NombreApp">PicShare</string>
 
     <string name="TituloLogin">Iniciar Sesión</string>
-    <string name="txtCorreoLogin">Correo</string>
+    <string name="txtCorreoLogin">Usuario</string>
+    <string name="txtCorreoReg">Correo</string>
     <string name="txtpassLogin">Contraseña</string>
     <string name="txtRegistraseLogin">Registrarse</string>
 
