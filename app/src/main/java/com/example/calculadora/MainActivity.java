@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
 	String Usuario = "-";
 	DetectarInternet di;
 	int position;
-	ArrayList<Fotos> FotosArrayList = new ArrayList<Fotos>();
-	ArrayList<Fotos> FotosArrayListCopy = new ArrayList<Fotos>();
+	//ArrayList<Fotos> FotosArrayList = new ArrayList<Fotos>();
+	//ArrayList<Fotos> FotosArrayListCopy = new ArrayList<Fotos>();
 
 
 	@Override
@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
 			AccionBotonUsuario();
 		});
 	}
+
+
 
 	public void BotonUsuario(){
 		try {
@@ -113,17 +115,5 @@ public class MainActivity extends AppCompatActivity {
 		Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
 	}
 
-	class Fotos {
-		String Foto;
 
-		public Fotos(String Foto){
-			this.Foto = Foto;
-		}
-		public String getFoto(){
-			return Foto;
-		}
-		public void setFoto(String idProductos) {
-			this.Foto = Foto;
-		}
-	}
 }
