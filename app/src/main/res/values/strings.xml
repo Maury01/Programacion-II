@@ -18,10 +18,16 @@
 
     <string name="UsuarioMain">Iniciar sesion</string>
     <string name="txtbuscar">Buscar Imagen</string>
-    
+
     <string name="Usuarioname">Usuario</string>
     <string name="btnPerfil">Editar Perfil</string>
     <string name="btncerrarsesion">Cerrar Sesión</string>
     <string name="mispublicaiones">Mis publicaiones</string>
+    <string name="nuevoPost">Nueva publicacion</string>
+
+    <string name="EditorPost">Editor de publicacion</string>
+    <string name="DescripcionEditorPost">Descripcion</string>
+    <string name="CategoriaEditorPost">Categoria</string>
+    <string name="publicarEditorPost">Publicar</string>
 
 </resources>
