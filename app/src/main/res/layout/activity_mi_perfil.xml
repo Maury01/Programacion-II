@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MiPerfil">
+    <Button
+        android:id="@+id/btnAtrasLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnAtras"
+        app:backgroundTint="#E63946"/>
 
     <TextView
         android:id="@+id/lblUsuarioPerfil"

@@ -46,7 +46,7 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 	Button IniciarSesion;
 	GridView ListaImagenes;
-	EditText Buscar;
+	EditText Buscar, U;
 	BD mibd;
 	String Usuario = "-";
 	DetectarInternet di;
@@ -64,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
 		ListaImagenes = (GridView) findViewById(R.id.grvImagenes);
 		Buscar = (EditText) findViewById(R.id.txtBuscarMain);
 		di = new DetectarInternet(getApplicationContext());
+		/*U = (EditText) findViewById(R.id.txtUsurioLogin);
+		if (U.getText() != null){
+			Usuario = U.getText().toString();
+		}*/
+		Usuario = "Mauricionk";
 
 
 
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 				Mensaje("Inicie Sesion para Interacturar");
 			} else if (Usuario != "-" || Usuario != null){
 				IniciarSesion.setText("Mi cuenta");
-				Usuario = getIntent().getStringExtra("User");
+				//Usuario = getIntent().getStringExtra("User");
 				Mensaje("Bienvenido " + Usuario);
 			}
 			Usuario = getIntent().getStringExtra("User");
@@ -92,17 +97,17 @@ public class MainActivity extends AppCompatActivity {
 
 	public void AccionBotonUsuario(){
 		try {
-			if (Usuario == "-" || Usuario == null){
-				IrLogin();
-			}else if (Usuario != "-" || Usuario == null){
+			//if (Usuario == "-" || Usuario == null){
+			//	IrLogin();
+			//}else if (Usuario != "-" || Usuario != null){
 				Micuenta();
-			}
+			//}
 		} catch (Exception e){Mensaje("Error Accion btn Usuario: " + e.getMessage());}
 	}
 
 	public void Micuenta(){
 		Intent micuenta = new Intent(this, MiPerfil.class);
-		micuenta.putExtra("UserName", Usuario);
+		//micuenta.putExtra("UserName", Usuario);
 		startActivity(micuenta);
 	}
 

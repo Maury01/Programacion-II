@@ -1,17 +1,19 @@
 package com.example.calculadora;
 
 public class publicaciones {
-String idPublicacion, Usuario, Descripcion, Categoria, URLFoto;
+String idPublicacion, Usuario, Descripcion, Categoria, URLFoto, URLFotoFirebase, token;
 
     public publicaciones() {
     }
 
-    public publicaciones(String idPublicacion, String usuario, String descripcion, String categoria, String URLFoto) {
+    public publicaciones(String idPublicacion, String usuario, String descripcion, String categoria, String URLFoto, String URLFotoFirebase, String token) {
         this.idPublicacion = idPublicacion;
-        Usuario = usuario;
-        Descripcion = descripcion;
-        Categoria = categoria;
+        this.Usuario = usuario;
+        this.Descripcion = descripcion;
+        this.Categoria = categoria;
         this.URLFoto = URLFoto;
+        this.URLFotoFirebase = URLFotoFirebase;
+        this.token = token;
     }
 
     public String getIdPublicacion() {
@@ -53,4 +55,12 @@ String idPublicacion, Usuario, Descripcion, Categoria, URLFoto;
     public void setURLFoto(String URLFoto) {
         this.URLFoto = URLFoto;
     }
+
+    public String getURLFotoFirebase() { return URLFotoFirebase; }
+
+    public void setURLFotoFirebase(String URLFotoFirebase) { this.URLFotoFirebase = URLFotoFirebase; }
+
+    public String getToken() { return token; }
+
+    public void setToken(String token) { this.token = token; }
 }

@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NuevoPost">
+    <Button
+        android:id="@+id/btnAtrasEditor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnAtras"
+        app:backgroundTint="#E63946"/>
 
     <TextView
         android:id="@+id/lblTituloNuevoPost"
@@ -44,7 +50,7 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/imgFoto"
         android:layout_marginTop="5dp">
-        <TextView
+        <EditText
             android:id="@+id/txtDescripcionEditor"
             android:layout_width="306dp"
             android:layout_height="120dp"
