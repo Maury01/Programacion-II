@@ -34,6 +34,11 @@ import java.util.ArrayList;
 import java.util.IllegalFormatCodePointException;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,8 +56,13 @@ public class MainActivity extends AppCompatActivity {
 	String Usuario = "-";
 	DetectarInternet di;
 	int position;
-	//ArrayList<Fotos> FotosArrayList = new ArrayList<Fotos>();
-	//ArrayList<Fotos> FotosArrayListCopy = new ArrayList<Fotos>();
+	DatabaseReference databaseReference;
+	publicaciones post;
+	JSONArray datosJSONArray = new JSONArray();
+	JSONObject datosJSONObject;
+	String miToken;
+	ArrayList<publicaciones> FotosArrayList = new ArrayList<publicaciones>();
+	ArrayList<publicaciones> FotosArrayListCopy = new ArrayList<publicaciones>();
 
 
 	@Override
@@ -71,8 +81,10 @@ public class MainActivity extends AppCompatActivity {
 		Usuario = "Mauricionk";
 
 
-
-		BotonUsuario();
+		try {
+			BotonUsuario();
+			mostrarPosts();
+		} catch (Exception e){Mensaje("cargar main: " + e.getMessage());}
 
 		IniciarSesion.setOnClickListener(v -> {
 			AccionBotonUsuario();
@@ -103,6 +115,39 @@ public class MainActivity extends AppCompatActivity {
 				Micuenta();
 			//}
 		} catch (Exception e){Mensaje("Error Accion btn Usuario: " + e.getMessage());}
+	}
+
+	public void mostrarPosts(){
+		databaseReference = FirebaseDatabase.getInstance().getReference("Publicaciones");
+
+		databaseReference.addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot snapshot) {
+				try {
+					for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+						post = dataSnapshot.getValue(publicaciones.class);
+						FotosArrayList.add(post);
+
+						datosJSONObject = new JSONObject();
+						datosJSONObject.put("Categoria", post.getCategoria());
+						datosJSONObject.put("Descripccion", post.getDescripcion());
+						datosJSONObject.put("key", post.getIdPublicacion());
+						datosJSONObject.put("URL", post.getURLFoto());
+						datosJSONObject.put("URLOnline", post.getURLFotoFirebase());
+						datosJSONObject.put("User", post.getUsuario());
+						datosJSONArray.put(datosJSONObject);
+					}
+					adaptadorImagenes adaptadorImagenes = new adaptadorImagenes(getApplicationContext(), FotosArrayList);
+					ListaImagenes.setAdapter(adaptadorImagenes);
+
+				} catch (Exception e){Mensaje("Mostrar posts: " + e.getMessage());}
+			}
+
+			@Override
+			public void onCancelled(@NonNull DatabaseError error) {
+
+			}
+		});
 	}
 
 	public void Micuenta(){

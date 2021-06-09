@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class adaptadorImagenes extends BaseAdapter {
@@ -38,13 +40,15 @@ public class adaptadorImagenes extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        layoutInflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View itemView = layoutInflater.inflate(R.layout.adaptador_de_imagenes, parent, false);
         ImageView imgView = itemView.findViewById(R.id.imgPhoto);
         TextView tempvalue = itemView.findViewById(R.id.lblTitulo);
         try {
             Post = ListaDePost.get(position);
             tempvalue.setText(Post.getUsuario());
-            //Glide.with(context).load(Post.getUrlPhotoFirestore()).into(imgView);
+            Glide.with(context).load(Post.getURLFotoFirebase()).into(imgView);
+
         } catch (Exception e){
             tempvalue.setText(e.getMessage());
         }
