@@ -1,5 +1,6 @@
 package com.example.calculadora;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,6 +9,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 //Mauricio Enrique Vásquez Ramirez	USIS007620
 //Michelle Brisette Perez Caballero USIS006620
@@ -18,7 +31,12 @@ public class MiPerfil extends AppCompatActivity {
     TextView Usuario;
     Button EditarPerfil, CerrarSesion, NuevoPost;
     GridView MisPublicaciones;
-    String accion = "nuevo";
+    String accion = "nuevo", UsuarioS;
+    ArrayList<publicaciones> FotosArrayList = new ArrayList<publicaciones>();
+    publicaciones post;
+    JSONArray datosJSONArray = new JSONArray();
+    JSONObject datosJSONObject;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +50,57 @@ public class MiPerfil extends AppCompatActivity {
         NuevoPost = (Button) findViewById(R.id.btnNuevaPublicacion);
         MisPublicaciones = (GridView) findViewById(R.id.grvMisImagenes);
 
+        Usuario.setText("Mauricionk");
+
         //Eventos
         NuevoPost.setOnClickListener(v -> {
             IrEditorPost();
         });
 
+        CargarMisPost();
+
+    }
+
+    public void CargarMisPost(){
+        UsuarioS = Usuario.getText().toString();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Publicaciones");
+        databaseReference.orderByChild("usuario").equalTo(UsuarioS).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        post = dataSnapshot.getValue(publicaciones.class);
+                        FotosArrayList.add(post);
+
+                        datosJSONObject = new JSONObject();
+                        datosJSONObject.put("Categoria", post.getCategoria());
+                        datosJSONObject.put("Descripccion", post.getDescripcion());
+                        datosJSONObject.put("key", post.getIdPublicacion());
+                        datosJSONObject.put("URL", post.getURLFoto());
+                        datosJSONObject.put("URLOnline", post.getURLFotoFirebase());
+                        datosJSONObject.put("User", post.getUsuario());
+                        datosJSONArray.put(datosJSONObject);
+                    }
+                    adaptadorImagenes adaptadorImagenes = new adaptadorImagenes(getApplicationContext(), FotosArrayList);
+                    MisPublicaciones.setAdapter(adaptadorImagenes);
+
+                } catch (Exception e){Mensaje("Mostrar posts: " + e.getMessage());}
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void IrEditorPost(){
         Intent Editor = new Intent(this, NuevoPost.class);
         //Editor.putExtra("accion", accion);
         startActivity(Editor);
+    }
+
+    private void Mensaje(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 }

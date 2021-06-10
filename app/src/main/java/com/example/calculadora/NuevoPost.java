@@ -120,7 +120,7 @@ public class NuevoPost extends AppCompatActivity {
                 //Usuario, Descripcion, Categoria, URLFoto, URLFotoFirebase, token
                 publicaciones post = new publicaciones(key, Usuario, Descripcion, Categoria, URL, URLFireStore, miToken);
                 if (Usuario != null || Usuario != ""){
-                    databaseReference.child(Usuario).setValue(post).addOnSuccessListener(aVoid -> {
+                    databaseReference.child(key).setValue(post).addOnSuccessListener(aVoid -> {
                        Mensaje("Imagen Publicada");
                        irMiPerfil();
                     });
