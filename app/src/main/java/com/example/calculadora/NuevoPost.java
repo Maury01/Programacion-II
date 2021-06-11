@@ -116,16 +116,16 @@ public class NuevoPost extends AppCompatActivity {
             if (miToken == "" || miToken == null) {
                 obtenerToken();
             }
-            //if( miToken!=null || miToken!="" ){
-                //Usuario, Descripcion, Categoria, URLFoto, URLFotoFirebase, token
+            if( miToken!=null || key == null){
                 publicaciones post = new publicaciones(key, Usuario, Descripcion, Categoria, URL, URLFireStore, miToken);
-                if (Usuario != null || Usuario != ""){
+
+                if (key == null){
                     databaseReference.child(key).setValue(post).addOnSuccessListener(aVoid -> {
                        Mensaje("Imagen Publicada");
                        irMiPerfil();
                     });
                 } else {Mensaje("NO se publico la imagen en la base de datos de firebase");}
-            //} else {Mensaje("NO pude obtener el identificar de tu telefono, por favor intentalo mas tarde.");}
+            } else {Mensaje("NO pude obtener el identificar de tu telefono, por favor intentalo mas tarde.");}
 
 
         } catch (Exception e){Mensaje("Error subir post: " + e.getMessage());}

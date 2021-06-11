@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Calculadora">
-        <activity android:name=".NuevoPost"></activity>
+        <activity android:name=".Publicacion"></activity>
+        <activity android:name=".NuevoPost" />
         <activity android:name=".MiPerfil" />
         <activity android:name=".Registro" />
         <activity android:name=".Login" />

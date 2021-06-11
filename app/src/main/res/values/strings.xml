@@ -30,4 +30,9 @@
     <string name="CategoriaEditorPost">Categoria</string>
     <string name="publicarEditorPost">Publicar</string>
 
+    <string name="publicacionUser">publicacion de</string>
+    <string name="Comantarios">Comentarios:</string>
+    <string name="Comentar">Comentar...</string>
+    <string name="Enviar">Ok</string>
+
 </resources>

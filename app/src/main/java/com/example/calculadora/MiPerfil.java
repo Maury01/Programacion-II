@@ -4,7 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -32,11 +38,13 @@ public class MiPerfil extends AppCompatActivity {
     Button EditarPerfil, CerrarSesion, NuevoPost;
     GridView MisPublicaciones;
     String accion = "nuevo", UsuarioS;
+    int position = 0;
     ArrayList<publicaciones> FotosArrayList = new ArrayList<publicaciones>();
     publicaciones post;
     JSONArray datosJSONArray = new JSONArray();
     JSONObject datosJSONObject;
     DatabaseReference databaseReference;
+    Cursor datosPeliculasCursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +69,40 @@ public class MiPerfil extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+      super.onCreateContextMenu(menu, v, menuInfo);
+      MenuInflater menuInflater = getMenuInflater();
+      menuInflater.inflate(R.menu.menu_mi_perfil, menu);
+
+      try {
+          AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
+          datosPeliculasCursor.moveToPosition(adapterContextMenuInfo.position);
+          position = adapterContextMenuInfo.position;
+          //menu.setHeaderTitle(datosJSONArray.getJSONObject(position).getJSONObject("User").getString("usuario"));
+
+      } catch (Exception e){Mensaje("Context Menu: " + e.getMessage());}
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item){
+
+        try {
+            switch (item.getItemId()){
+                case R.id.mnxActualizar:
+                    //ActualizarrPeliculas("nuevo");
+                    break;
+                case R.id.mnxModificar:
+                    //ModificarPeli("modificar");
+                    break;
+                case R.id.mnxEliminar:
+                    //eliminarPelicula();
+                    break;
+            }
+        } catch (Exception e){Mensaje("Context Intem: " + e.getMessage());}
+        return super.onContextItemSelected(item);
+    }
+
     public void CargarMisPost(){
         UsuarioS = Usuario.getText().toString();
         databaseReference = FirebaseDatabase.getInstance().getReference("Publicaciones");
@@ -71,6 +113,7 @@ public class MiPerfil extends AppCompatActivity {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                         post = dataSnapshot.getValue(publicaciones.class);
                         FotosArrayList.add(post);
+                        //JSONObject jsonValueobject = new JSONObject();
 
                         datosJSONObject = new JSONObject();
                         datosJSONObject.put("Categoria", post.getCategoria());
@@ -83,6 +126,7 @@ public class MiPerfil extends AppCompatActivity {
                     }
                     adaptadorImagenes adaptadorImagenes = new adaptadorImagenes(getApplicationContext(), FotosArrayList);
                     MisPublicaciones.setAdapter(adaptadorImagenes);
+                    registerForContextMenu(MisPublicaciones);
 
                 } catch (Exception e){Mensaje("Mostrar posts: " + e.getMessage());}
             }
