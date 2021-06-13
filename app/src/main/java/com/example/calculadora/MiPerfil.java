@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
 public class MiPerfil extends AppCompatActivity {
     TextView Usuario;
-    Button EditarPerfil, CerrarSesion, NuevoPost;
+    Button EditarPerfil, CerrarSesion, NuevoPost, atras;
     GridView MisPublicaciones;
     String accion = "nuevo", UsuarioS;
     int position = 0;
@@ -55,6 +55,7 @@ public class MiPerfil extends AppCompatActivity {
         Usuario = (TextView) findViewById(R.id.lblUsuarioPerfil);
         EditarPerfil = (Button) findViewById(R.id.btnEditPerfil);
         CerrarSesion = (Button) findViewById(R.id.btnCerrarSesion);
+        atras = (Button) findViewById(R.id.btnAtrasPerfil);
         NuevoPost = (Button) findViewById(R.id.btnNuevaPublicacion);
         MisPublicaciones = (GridView) findViewById(R.id.grvMisImagenes);
 
@@ -63,6 +64,10 @@ public class MiPerfil extends AppCompatActivity {
         //Eventos
         NuevoPost.setOnClickListener(v -> {
             IrEditorPost();
+        });
+
+        atras.setOnClickListener(v -> {
+            PaginaPrincipal();
         });
 
         CargarMisPost();
@@ -142,6 +147,12 @@ public class MiPerfil extends AppCompatActivity {
         Intent Editor = new Intent(this, NuevoPost.class);
         //Editor.putExtra("accion", accion);
         startActivity(Editor);
+    }
+
+    public void PaginaPrincipal(){
+        Intent PagPrincipal = new Intent(this, MainActivity.class);
+        //PagPrincipal.putExtra("User", User);
+        startActivity(PagPrincipal);
     }
 
     private void Mensaje(String msg) {

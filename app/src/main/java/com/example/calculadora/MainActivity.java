@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 	GridView ListaImagenes;
 	EditText Buscar, U;
 	BD mibd;
-	String Usuario = "-";
+	String Usuario = "-", accion = "ver";
 	DetectarInternet di;
 	int position;
 	DatabaseReference databaseReference;
@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
 		IniciarSesion.setOnClickListener(v -> {
 			AccionBotonUsuario();
 		});
+
+		AbrirPost();
 	}
 
 
@@ -148,6 +150,29 @@ public class MainActivity extends AppCompatActivity {
 
 			}
 		});
+	}
+
+	public void AbrirPost(){
+		ListaImagenes.setOnItemClickListener((parent, view, position1, id) -> {
+			try {
+				Bundle parametros = new Bundle();
+				parametros.putString("accion", accion);
+				if (datosJSONArray.length() > 0){
+					parametros.putString("Categoria", datosJSONArray.getJSONObject(position1).getString("Categoria"));
+					parametros.putString("Descripccion", datosJSONArray.getJSONObject(position1).getString("Descripccion"));
+					parametros.putString("key", datosJSONArray.getJSONObject(position1).getString("key"));
+					parametros.putString("URL", datosJSONArray.getJSONObject(position1).getString("URL"));
+					parametros.putString("URLOnline", datosJSONArray.getJSONObject(position1).getString("URLOnline"));
+					parametros.putString("User", datosJSONArray.getJSONObject(position1).getString("User"));
+				}
+
+				Intent VerPost = new Intent(getApplicationContext(), Publicacion.class);
+				VerPost.putExtras(parametros);
+				startActivity(VerPost);
+
+			}catch (Exception e) {Mensaje("Abrir post: " + e.getMessage()); }
+		});
+
 	}
 
 	public void Micuenta(){

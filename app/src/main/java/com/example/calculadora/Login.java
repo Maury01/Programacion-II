@@ -118,7 +118,7 @@ public class Login extends AppCompatActivity {
         startActivity(Reg);
     }
 
-    private void Mensaje(String msg){
-
+    private void Mensaje(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 }

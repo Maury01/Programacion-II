@@ -53,7 +53,7 @@
         android:layout_marginTop="5dp">
 
             <TextView
-                android:id="@+id/txtDescripcionPost"
+                android:id="@+id/lblDescripcionPost"
                 android:layout_width="306dp"
                 android:layout_height="50dp"
                 android:hint="@string/DescripcionEditorPost"
@@ -63,7 +63,7 @@
                 android:layout_marginLeft="50dp"/>
 
             <TextView
-                android:id="@+id/txtCategoriaOtherPost"
+                android:id="@+id/lblCategoriaOtherPost"
                 android:layout_width="306dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/CategoriaEditorPost"
