@@ -1,9 +1,11 @@
 package com.example.calculadora;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,10 +15,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 //Mauricio Enrique Vásquez Ramirez	USIS007620
 //Michelle Brisette Perez Caballero USIS006620
 //Elias Mauricio Parada Lozano		USIS030320
@@ -29,10 +38,15 @@ public class Publicacion extends AppCompatActivity {
     ImageView ImagenPost;
     ListView Comentarios;
     EditText EscribirComentario;
-    String URL, URLFireBase, key, DescripcionText, CategoriaText, Usuario, Comentario, idComentario;
+    String URL, URLFireBase, key, DescripcionText, CategoriaText, Usuario, Comentario, idComentario, miToken;
     publicaciones post;
     Context context;
     DatabaseReference databaseReference;
+    JSONArray datosJSONArray = new JSONArray();
+    JSONObject datosJSONObject;
+    ArrayList<comentarios> ComentariosArrayList = new ArrayList<comentarios>();
+    Cursor datosPeliculasCursor;
+    comentarios coments;
 
 
 
@@ -61,7 +75,13 @@ public class Publicacion extends AppCompatActivity {
         });
 
         //Funciones
+        //try {
+        obtenerToken();
+
+        //} catch (Exception e){ Mensaje("Cargar: " + e.getMessage());}
         RecibirPost();
+        MostrarComentarios();
+
     }
 
     public void RecibirPost(){
@@ -86,20 +106,69 @@ public class Publicacion extends AppCompatActivity {
     }
 
     public void MostrarComentarios(){
+        Mensaje("key: "+key);
+        databaseReference = FirebaseDatabase.getInstance().getReference("Comentarios");
+        databaseReference.orderByChild("idPublicacion").equalTo(key).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        coments = dataSnapshot.getValue(comentarios.class);
+                        ComentariosArrayList.add(coments);
 
+                        datosJSONObject = new JSONObject();
+                        datosJSONObject.put("IdComentario", coments.getIdComentarios());
+                        datosJSONObject.put("idPublicacion", coments.getIdPublicacion());
+                        datosJSONObject.put("Texto", coments.getTexto());
+                        datosJSONObject.put("Usuario", coments.getUsaurio());
+                        datosJSONArray.put(datosJSONObject);
+                    }
+                    adaptadorComentarios adaptadorComentarios = new adaptadorComentarios(getApplicationContext(), ComentariosArrayList);
+                    Comentarios.setAdapter(adaptadorComentarios);
+
+                } catch (Exception e){Mensaje("Mostrar COmentarios: " + e.getMessage());}
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
     public void EnviarComentario(){
-        Comentario = EscribirComentario.getText().toString();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Comentarios");
-        idComentario = databaseReference.push().getKey();
+        try {
+            Comentario = EscribirComentario.getText().toString();
+            databaseReference = FirebaseDatabase.getInstance().getReference("Comentarios");
+            idComentario = databaseReference.push().getKey();
 
-        //Hacer clase comentarios
+            if (miToken == "" || miToken == null) {
+                obtenerToken();
+            }
+            if( miToken!=null || idComentario == null){
+                coments = new comentarios(idComentario, Usuario, Comentario, key);
 
+                if (idComentario != null){
+                    databaseReference.child(idComentario).setValue(coments).addOnSuccessListener(aVoid -> {
+                        Mensaje("Comentario Publicado");
+                        EscribirComentario.setText("");
+                    });
+                } else {Mensaje("El comentario no se publico");}
+            } else {Mensaje("NO pude obtener el identificar de tu telefono, por favor intentalo mas tarde.");}
+        } catch (Exception e){Mensaje("Enviar Comentario: " + e.getMessage());}
 
     }
 
     void mostrarFoto(){
         Glide.with(getApplicationContext()).load(URLFireBase).into(ImagenPost);
+    }
+
+    private void obtenerToken(){
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if( !task.isSuccessful() ){
+                return;
+            }
+            miToken = task.getResult();
+        });
     }
 
     public void PaginaPrincipal(){

@@ -94,9 +94,7 @@
             <ListView
                 android:id="@+id/ltsComentarios"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </ListView>
+                android:layout_height="100dp"/>
         </ScrollView>
 
         <LinearLayout
@@ -120,7 +118,7 @@
                 android:backgroundTint="#A8DADC"
                 android:text="@string/Enviar"
                 android:textColor="#445966"
-                android:textSize="18dp"/>
+                android:textSize="15dp"/>
         </LinearLayout>
     </LinearLayout>
 

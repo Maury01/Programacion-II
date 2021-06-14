@@ -81,6 +81,7 @@ public class NuevoPost extends AppCompatActivity {
             SubirFoto();
         });
         Permisos();
+        obtenerToken();
     }
 
     void SubirFoto(){
@@ -119,7 +120,7 @@ public class NuevoPost extends AppCompatActivity {
             if( miToken!=null || key == null){
                 publicaciones post = new publicaciones(key, Usuario, Descripcion, Categoria, URL, URLFireStore, miToken);
 
-                if (key == null){
+                if (key != null){
                     databaseReference.child(key).setValue(post).addOnSuccessListener(aVoid -> {
                        Mensaje("Imagen Publicada");
                        irMiPerfil();
